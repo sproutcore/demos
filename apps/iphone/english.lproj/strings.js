@@ -1,6 +1,8 @@
 // ==========================================================================
-// Drag English Strings
+// Project:   Iphone Strings
+// Copyright: ©2009 My Company, Inc.
 // ==========================================================================
+/*globals Iphone */
 
 // Place strings you want to localize here.  In your app, use the key and
 // localize it using "key string".loc().  HINT: For your key names, use the
@@ -8,6 +10,6 @@
 // how your UI will look and you'll notice right away when something needs a
 // localized string added to this file!
 //
-SC.stringsFor(String.English,{
+SC.stringsFor('English', {
   // "_String Key": "Localized String"
 }) ;
