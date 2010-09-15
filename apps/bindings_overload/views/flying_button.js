@@ -14,8 +14,23 @@
 
   @extends SC.View
 */
-BindingsOverload.FlyingButtonView = SC.ButtonView.extend(
+BindingsOverload.FlyingButtonView = SC.ButtonView.extend(SC.Animatable, 
 /** @scope BindingsOverload.FlyingButtonView.prototype */ {
+
+  transitions: {
+    opacity: {
+      duration: 1,
+      timingFunction: 'linear'
+    },
+    left: {
+      duration: 1,
+      timingFunction: 'ease-in-out'
+    },
+    top: {
+      duration: 1,
+      timingFunction: 'ease-in-out'
+    }
+  },
 
   /**
     Choose a random position in the viewport and move the view there.
@@ -50,11 +65,7 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(
     fade out.
   */
   dimControl: function() {
-    // $() is a function of SC.Views that returns a CoreQuery object.
-    // CoreQuery objects allow you to directly manipulate the DOM in a
-    // cross-platform-safe way.  You should always use CQ objects instead of
-    // native DOM elements.
-    this.$().css('opacity',0);
+    this.adjust('opacity', 0);
 
     // Remove the button after the fade completes.
     this.invokeLater(this.removeButton, 1000);
@@ -65,14 +76,16 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(
     and returns the button to the button pool.
   */
   removeButton: function() {
+    this.adjust('opacity', 1);    
     this.removeFromParent();
-    this.$().css('opacity',1);
+    
     BindingsOverload.appController.returnToPool(this);
   },
 
   /**
     Just for fun, make the button run away when you try to mouse over it.
   */
+  /*
   mouseEntered: function() {
     var rand = Math.floor(Math.random()*400+100), x, y,
         frame = this.get('frame');
@@ -83,4 +96,5 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(
     y = (Math.random() > 0.5) ? rand : rand * -1;
     this.adjust({ top: y, left: x });
   }
+  */
 });

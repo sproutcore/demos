@@ -76,6 +76,9 @@ config :common_assets do |c|
   c[:required] = [:sproutcore]
 end
 
+config :bindings_overload,
+  :required => ['sproutcore', 'sproutcore/animation']
+
 # Costello example.  Does not use the rest of SproutCore
 config :store_configurator, 
   :required => 'sproutcore/runtime'#, :theme => nil

@@ -22,15 +22,18 @@
   your view. See our custom view in main_page.js, which we style below by
   using the '.bindings-controls' selector.
 */
-.sc-button-view {
-  opacity: 1;
-  -webkit-transition-property: left, top, opacity;
-  -webkit-transition-duration: 1s, 1s, 1s;
-  -webkit-transition-timing-function: ease-in-out, ease-in-out, linear;
-}
 
 .bindings-controls {
-  background-color: rgba(0,0,0,0.4);
   padding: 6px;
   z-index: 1;
+}
+
+.bindings-controls .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.4;
 }
