@@ -80,37 +80,6 @@ end
 config :store_configurator, 
   :required => 'sproutcore/runtime'#, :theme => nil
 
-# Vanilla requires only the empty theme and foundation.  It is used to test
-# just the plain vanilla, platform-independent components of SproutCore.
-config :vanilla, 
-  :required => 'sproutcore/foundation',
-  :theme    => 'sproutcore/empty_theme'
-  
-config :iphone_demo, 
-  :required => 'sproutcore/mobile',
-  :theme    => 'sproutcore/iphone_theme',
-  :layout   => 'sproutcore/mobile:lib/index.rhtml'
-
 # table_view demo requires the sproutcore/table framework
 config :table_view,
   :required => ['sproutcore', 'sproutcore/table']
-  
-config :sproutweets,
-  :required => ['twitter', 'sproutcore/animation']
-
-config :video,
-  :required => ['sproutcore', 'sproutcore/media']
-
-config :audio,
-  :required => ['sproutcore', 'sproutcore/media']
-
-
-# Setup extra services to proxy.  This is used only in dev mode so you can
-# talk to backend services.
-
-# This will proxy all requests to /* -> http://www.twitter.com/*
-proxy '/statuses', :to => 'twitter.com'
-proxy '/search', :to =>'search.twitter.com'
-proxy '/users', :to => 'twitter.com'
-proxy '/1', :to => 'twitter.com'
-proxy '/account', :to =>'twitter.com'
