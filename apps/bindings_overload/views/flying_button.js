@@ -20,17 +20,21 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(SC.Animatable,
   transitions: {
     opacity: {
       duration: 1,
-      timingFunction: 'linear'
+      timing: 'linear',
+      action: '_opacityDoneAnimating'
     },
     left: {
       duration: 1,
-      timingFunction: 'ease-in-out'
+      timing: 'ease-in-out'
     },
     top: {
       duration: 1,
-      timingFunction: 'ease-in-out'
+      timing: 'ease-in-out',
+      action: '_topDoneAnimating'
     }
   },
+
+  wantsAcceleratedLayer: YES,
 
   /**
     Choose a random position in the viewport and move the view there.
@@ -65,10 +69,8 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(SC.Animatable,
     fade out.
   */
   dimControl: function() {
+    this._opacityEndCallback = this.removeButton;
     this.adjust('opacity', 0);
-
-    // Remove the button after the fade completes.
-    this.invokeLater(this.removeButton, 1000);
   },
 
   /**
@@ -76,7 +78,7 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(SC.Animatable,
     and returns the button to the button pool.
   */
   removeButton: function() {
-    this.adjust('opacity', 1);    
+    this.adjust('opacity', 1);
     this.removeFromParent();
     
     BindingsOverload.appController.returnToPool(this);
@@ -85,16 +87,40 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(SC.Animatable,
   /**
     Just for fun, make the button run away when you try to mouse over it.
   */
-  /*
   mouseEntered: function() {
     var rand = Math.floor(Math.random()*400+100), x, y,
         frame = this.get('frame');
 
-    this.$().css('-webkit-transition-duration', '0.2s, 0.2s, 1s');
-    this.$().css('-webkit-transition-timing-function', 'linear, linear, linear');
+    // Hack since the transitions hash is shared
+    if (!this._hasClonedTransitions){
+      this.transitions = SC.clone(this.transitions, YES);
+      this._hasClonedTransitions = YES;
+    }
+
+    if (!this._originalTopDuration) this._originalTopDuration = this.transitions.top.duration;
+    if (!this._originalLeftDuration) this._originalLeftDuration = this.transitions.left.duration;
+    this.transitions.top.duration = 0.2;
+    this.transitions.left.duration = 0.2;
+    
     x = (Math.random() > 0.5) ? rand : rand * -1;
     y = (Math.random() > 0.5) ? rand : rand * -1;
     this.adjust({ top: y, left: x });
+  },
+
+  _topDoneAnimating: function(){
+    if (this._originalTopDuration) {
+      this.transitions.top.duration = this._originalTopDuration;
+    }
+    if (this._originalLeftDuration) {
+      this.transitions.left.duration = this._originalLeftDuration;
+    }
+  },
+
+  _opacityDoneAnimating: function(){
+    if (this._opacityEndCallback) {
+      this._opacityEndCallback.call(this);
+      this._opacityEndCallback = null;
+    }
   }
-  */
+
 });
