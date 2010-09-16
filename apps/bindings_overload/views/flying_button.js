@@ -93,7 +93,8 @@ BindingsOverload.FlyingButtonView = SC.ButtonView.extend(SC.Animatable,
 
     // Hack since the transitions hash is shared
     if (!this._hasClonedTransitions){
-      this.transitions = SC.clone(this.transitions, YES);
+      this.transitions.top = SC.clone(this.transitions.top);
+      this.transitions.left = SC.clone(this.transitions.left);
       this._hasClonedTransitions = YES;
     }
 
