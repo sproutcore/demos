@@ -36,4 +36,5 @@
   bottom: 0;
   background-color: black;
   opacity: 0.4;
+  z-index: -1;
 }

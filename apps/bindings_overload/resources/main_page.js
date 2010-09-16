@@ -33,6 +33,11 @@ BindingsOverload.mainPage = SC.Page.design({
       // (in resources/main_page.css)
       classNames: 'bindings-controls'.w(),
 
+      render: function(context, firstTime){
+        sc_super();
+        if (firstTime) context.push("<div class='background'></div>");
+      },
+
       titleField: SC.TextFieldView.design({
         layout: { top: 15, left: 10, width: 200, height: 30 },
 
