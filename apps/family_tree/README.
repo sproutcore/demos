@@ -1,0 +1,24 @@
+=== Welcome to the Sproutcore-UI (SCUI) LinkIt Demo Application: ===
+
+This is a basic sample app for some great directed and non-directed graph from the SCUI:LinkIt framework
+
+=== USAGE ===
+
+After INSTALLATION:
+  - run 'sc-server' from root directory
+  - open a non-IE browser to: 'http://localhost:4020/family_tree'
+  - Click on the 'Doe Family'
+  - Drag any of the people or pets around
+  - Click 'Add Male' to add a new person
+  - Double-click on name to rename
+  - Drag a link from a female to connect to the mother, spouse terminals
+  - have fun seeing graph automatically update 
+
+=== CONTRIBUTORS ===
+
+Main Architect: Evin Grano (etgryphon)
+Design: Matt Grantham (in), Ryan Mudryk (it), Alex Iskander (ialexi)
+  
+=== LICENSE ===
+
+LinkIt Demo is under the MIT License

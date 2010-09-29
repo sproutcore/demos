@@ -9,7 +9,7 @@ This is a basic library for some great native Sproutcore UI functionality includ
 - Calendar:
   [ALPHA] Basic Calendar Functionality: Datepicker, CalendarView
 - Dashboard:
-  [EXPERIMENTAL] Basic iGoogle-like framework, very early stages with lots of bugs
+  [EXPERIMENTAL] Basic OSX/Windows 7 Freeform Dashboard, very early stages with lots of bugs
 - Drawing
   [ALPHA] Basic drawing framework that uses the canvas tag, SVG to be added soon.
 - LinkIt
@@ -34,11 +34,6 @@ Contributors:
   - Michael Harris
   - Brandon Blatnick
   - Devin Torres
-
-=== FUTURE DEVELOPMENT ===
-- Dashboard
-  - Develop the OSX/Windows 7 Freeform Dashboard
-  - Harden the iGoogle Dashboard Functionality
   
 === LICENSE ===
 
