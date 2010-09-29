@@ -76,6 +76,9 @@ config :common_assets do |c|
   c[:required] = [:sproutcore]
 end
 
+config :scui, :required => [:sproutcore, :'scui/drawing', :'scui/linkit']
+
+
 config :bindings_overload,
   :required => ['sproutcore', 'sproutcore/animation']
 
@@ -86,3 +89,12 @@ config :store_configurator,
 # table_view demo requires the sproutcore/table framework
 config :table_view,
   :required => ['sproutcore', 'sproutcore/table']
+
+config :family_tree_theme, 
+  :theme_name => 'family_tree_theme'
+
+config :family_tree do |c|
+  c[:required] = [:sproutcore, :scui]
+  c[:theme] = :family_tree_theme
+end
+  
