@@ -44,8 +44,9 @@ FamilyTree.Pet = SC.Record.extend(LinkIt.Node, {
   }.property('belongsTo').cacheable(),
   
   didCreateLink: function(link) {
-    var sn = link.get('startNode'), st = link.get('startTerminal');
-    var en = link.get('endNode'), et = link.get('endTerminal');
+    var l = link[0]; // The link is comprised of an ARRAY of links with the Bi-directional links...often you only need the first object to complete the link
+    var sn = l.get('startNode'), st = l.get('startTerminal');
+    var en = l.get('endNode'), et = l.get('endTerminal');
     //console.log('Pet...didCreateLink: start:%@ end:%@'.fmt(st, et));
     if(en === this && et === 'myOwner'){
       this.set('belongsTo', sn);

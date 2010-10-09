@@ -1,8 +1,7 @@
 // ==========================================================================
 // FamilyTree.familyController
 // ==========================================================================
-
-sc_require('core');
+/*globals FamilyTree */
 
 /**
   @extends SC.ArrayController
@@ -12,7 +11,7 @@ sc_require('core');
   This controller holds all the family tree information. It transforms the objects array into a list of nodes
   that LinkIt can use.
 */
-FamilyTree.familyController = SC.ObjectController.create( 
+FamilyTree.familyController = SC.ObjectController.create( SC.CollectionViewDelegate,
   /* @scope */{
 
   // PUBLIC PROPERTIES
@@ -26,6 +25,17 @@ FamilyTree.familyController = SC.ObjectController.create(
   
   contentBinding: 'FamilyTree.familiesController.selection',
   contentBindingDefault: SC.Binding.oneWay().single(),
+  
+  // LinkIt Canvas is a Collection Views so to correct the deletion you have to include this
+  /**
+    Delegate for SC.CollectionView's deletion.  We implement this here
+    because we have to handle deletion very carefully, but we still want to be able to
+    trigger it by pressing the delete key on the canvas.
+  */
+  collectionViewDeleteContent: function(view, content, indexes) {
+    FamilyTree.deleteSelectedMembers();
+    return YES;
+  },
 
   // PUBLIC METHODS
   /**

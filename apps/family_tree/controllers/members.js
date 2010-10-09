@@ -1,8 +1,7 @@
 // ==========================================================================
 // FamilyTree.membersController
 // ==========================================================================
-
-sc_require('core');
+/*globals FamilyTree */
 
 /**
   @extends SC.ArrayController

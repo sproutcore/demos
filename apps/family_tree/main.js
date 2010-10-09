@@ -12,17 +12,20 @@
 // See comments for some pointers on what to do next.
 //
 FamilyTree.main = function main() {
-
-  // Step 1: Instantiate Your Views
-  // The default code here will make the mainPane for your application visible
-  // on screen.  If you app gets any level of complexity, you will probably 
-  // create multiple pages and panes.  
-  FamilyTree.getPath('mainPage.mainPane').append() ;
-
-  // Step 2. Set the content property on your primary controller.
-  var store = FamilyTree.get('store');
-  FamilyTree.familiesController.set('content', store.find(FamilyTree.Family));
   
+  if(SC.browser.isMobileSafari || SC.browser.isiPhone){
+    FamilyTree.getPath('mainPage.invalidBrowserPane').append() ;
+  } else {
+    // Step 1: Instantiate Your Views
+    // The default code here will make the mainPane for your application visible
+    // on screen.  If you app gets any level of complexity, you will probably 
+    // create multiple pages and panes.  
+    FamilyTree.getPath('mainPage.mainPane').append() ;
+
+    // Step 2. Set the content property on your primary controller.
+    var store = FamilyTree.get('store');
+    FamilyTree.familiesController.set('content', store.find(FamilyTree.Family));
+  }
 } ;
 
 function main() { FamilyTree.main(); }

@@ -7,7 +7,7 @@
  * @version 0.1
  * @since 0.1
  */
-sc_require('core');
+/*globals FamilyTree */
 
 FamilyTree.Family = SC.Record.extend({ 
   primaryKey: 'id',
@@ -63,6 +63,21 @@ FamilyTree.Family = SC.Record.extend({
       else {
         console.error('Bad member type');
       }
+    }
+  },
+  
+  removeMember: function(member){
+    var ppl, pets, store = FamilyTree.get('store');
+    if (member.instanceOf(FamilyTree.Human)){
+      ppl = this.get('people');
+      ppl.removeObject(member);
+    }
+    else if (member.instanceOf(FamilyTree.Pet)){
+      pets = this.get('pets');
+      pets.removeObject(member);
+    }
+    else {
+      console.error('Bad member type');
     }
   }
 });

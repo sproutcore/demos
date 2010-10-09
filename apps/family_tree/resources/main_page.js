@@ -10,6 +10,38 @@ sc_require('views/list_button');
 
 // This page describes the main user interface for your application.  
 FamilyTree.mainPage = SC.Page.design({
+  
+  invalidBrowserPane: SC.Pane.design({
+    childViews: 'title main'.w(),
+    
+    title: SC.View.design({
+      layout: {left: 0, top: 0, right: 0, height: 56},
+      classNames: ['header'],
+      render: function(context, firstTime){
+        context = context.begin('div')
+                    .addClass('logo')
+                      .text('family tree')
+                  .end();
+        context = context.begin('div')
+                    .addClass('blurb')
+                      .text('a scui linkit example')
+                  .end();
+        context = context.begin('div')
+                   .addClass('leaves')
+                  .end();
+      }
+    }),
+    
+    main: SC.View.design({
+      layout: {left: 0, top: 56, right: 0, bottom: 0},
+      render: function(context, firstTime){
+        context = context.begin('div')
+                    .addClass('apology')
+                      .text('Sorry, Linkit is designed for desktop application for now and we are working on adding mobile support...')
+                  .end();
+      }
+    })
+  }),
 
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page 
@@ -75,7 +107,8 @@ FamilyTree.mainPage = SC.Page.design({
       contentBinding: SC.Binding.from('FamilyTree.membersController').oneWay(),
       selectionBinding: 'FamilyTree.membersController.selection',
       nodeViewDelegate: FamilyTree.familyController,
-      exampleView: FamilyTree.NodeView
+      exampleView: FamilyTree.NodeView,
+      delegate: FamilyTree.familyController
     }),    
     
     palette: SC.View.design({

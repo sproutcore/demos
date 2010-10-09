@@ -14,10 +14,10 @@ FamilyTree.Human = SC.Record.extend(LinkIt.Node, {
   primaryKey: 'id',
   name: SC.Record.attr(String, { isRequired: YES, defaultValue: 'Enter Name' }),
   isMale: SC.Record.attr(Boolean, { isRequired: YES, defaultValue: YES }),
-  family: SC.Record.attr('FamilyTree.Family'),
-  mother: SC.Record.attr('FamilyTree.Human'),
-  father: SC.Record.attr('FamilyTree.Human'),
-  spouse: SC.Record.attr('FamilyTree.Human'),
+  family: SC.Record.toOne('FamilyTree.Family'),
+  mother: SC.Record.toOne('FamilyTree.Human'),
+  father: SC.Record.toOne('FamilyTree.Human'),
+  spouse: SC.Record.toOne('FamilyTree.Human'),
   pets: SC.Record.toMany('FamilyTree.Pet', {
     inverse: 'belongsTo',
     isMaster: YES
