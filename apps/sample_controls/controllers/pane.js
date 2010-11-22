@@ -99,7 +99,7 @@ SampleControls.paneController = SC.Object.create(
     if (this.getPath('palettePane.isPaneAttached')) return;
 
     var pane = SC.PalettePane.create({
-      layout: { width: 400, height: 200, right: 20, top: 0 },
+      layout: { width: 400, height: 200, right: 20, top: 20 },
       contentView: SC.View.extend({
         layout: { top: 0, left: 0, bottom: 0, right: 0 },
         childViews: 'labelView buttonView'.w(),
