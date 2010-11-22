@@ -96,6 +96,8 @@ SampleControls.paneController = SC.Object.create(
   },
 
   showPalettePane: function() {
+    if (this.getPath('palettePane.isPaneAttached')) return;
+
     var pane = SC.PalettePane.create({
       layout: { width: 400, height: 200, right: 20, top: 0 },
       contentView: SC.View.extend({

@@ -56,7 +56,9 @@ SampleControls.panePage = SC.Page.create({
         theme: 'square',
         title: 'SC.PalettePane',
         action: "showPalettePane",
-        target: "SampleControls.paneController"
+        target: "SampleControls.paneController",
+        isEnabledBindingDefault: SC.Binding.oneWay().bool().not(),
+        isEnabledBinding: 'SampleControls.paneController*palettePane.isPaneAttached'
       })
 
       .title('Picker').height(24).sample(SC.ButtonView, {
