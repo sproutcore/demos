@@ -3,8 +3,6 @@
 // ==========================================================================
 /*global main $ Store */
 
-sc_require('jquery');
-
 /**
   Can be used to customize a product by choosing from a variety of options.
   The new total and taxes will be added automatically.

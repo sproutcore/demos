@@ -84,7 +84,7 @@ config :bindings_overload,
 
 # Costello example.  Does not use the rest of SproutCore
 config :store_configurator, 
-  :required => 'sproutcore/runtime'#, :theme => nil
+  :required => 'sproutcore/runtime', :theme => nil
 
 # table_view demo requires the sproutcore/table framework
 config :table_view,
