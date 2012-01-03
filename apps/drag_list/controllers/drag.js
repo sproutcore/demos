@@ -79,7 +79,7 @@ DragList.dragController = SC.Object.create(SC.CollectionViewDelegate,
     if (!employees) return ret;
     
     // adjust the index to the location to insert and then add it
-    if (dropOp & SC.DROP_AFTER) idx--;
+    if (dropOp & SC.DROP_AFTER) idx++;
     if (idx>len) idx = len;
     content.replace(idx, 0, employees);
     
