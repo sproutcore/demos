@@ -1,0 +1,61 @@
+@import "compass/css3";
+@import "compass/css3/user-interface";
+
+$theme.sc-label-view.demo-title {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+$theme.sc-label-view.demo-desc {
+}
+
+
+$theme.sc-view.color-preview-box {
+  @include box-shadow(rgba(0,0,0,0.5) 5px 5px 10px);
+  background-color: #efefef;
+  border: 1px solid #505050;
+}
+
+$theme.sc-view.color-preview {
+  @include border-radius(10px);
+  @include box-shadow(rgba(0,0,0,0.5) 0px 0px 5px inset);
+  border: 1px solid #505050;
+}
+
+$theme.sc-view.color-sub-preview {
+  @include border-radius(10px);
+  @include box-shadow(rgba(0,0,0,0.5) 0px 1px 3px);
+  border: 2px solid #f0f0f0;
+  border-top-color: #ffffff;
+  border-bottom-color: #d1d1d1;
+
+  &.active {
+    @include box-shadow(none);
+    opacity: 0.8;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+$theme.sc-label-view.slider-title {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  text-align: right;
+}
+
+$theme.sc-label-view.slider-value {
+  line-height: 24px;
+  text-align: right;
+}
+
+$theme.sc-text-field-view.color-text {
+  font-size: 16px;
+  input {
+    text-align: center;
+  }
+}
