@@ -8,7 +8,7 @@
 
 ColorDemo.colorViewController = SC.ObjectController.create({
 
-  content: SC.Color.from('steelblue'),
+  content: SC.Color.from('steelblue').set('a', 0.5),
 
   brighterColor: function() {
     var color = this.get('content');
