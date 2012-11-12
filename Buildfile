@@ -14,11 +14,11 @@
 config :all do |c|
 
   c[:build_languages] = [:en, :fr, :de, :ja, :es, :it]
-  
+
   # Name any other frameworks your bundles depend upon.  The stylesheets and
   # JavaScript for required bundles will be loaded before your bundle on your
   # page.
-  c[:required] = [:sproutcore, :common_assets]
+  # c[:required] = [:sproutcore, :common_assets]
 
   # This string will be prepended before any URLs that reference JavaScript,
   # CSS or images in your files.
@@ -83,18 +83,18 @@ config :bindings_overload,
   :required => ['sproutcore', 'sproutcore/animation']
 
 # Costello example.  Does not use the rest of SproutCore
-config :store_configurator, 
+config :store_configurator,
   :required => 'sproutcore/runtime', :theme => nil
 
 # table_view demo requires the sproutcore/table framework
 config :table_view,
   :required => ['sproutcore', 'sproutcore/table']
 
-config :family_tree_theme, 
+config :family_tree_theme,
   :theme_name => 'family_tree_theme'
 
 config :family_tree do |c|
   c[:required] = [:sproutcore, :scui]
   c[:theme] = :family_tree_theme
 end
-  
+

@@ -9,4 +9,4 @@
 # Buildfile, which contains default settings for all apps in your project.
 
 # It is better to add :required targets here than in the global Buildfile.
-config :color_demo, :required => :sproutcore
+config :color_demo, :required => [:"sproutcore/desktop"]
