@@ -6,7 +6,7 @@
 /*globals ColorDemo*/
 
 
-ColorDemo.colorViewController = SC.ObjectController.create({
+ColorDemo.mainViewController = SC.ObjectController.create({
 
   content: SC.Color.from('steelblue').set('a', 0.5),
 

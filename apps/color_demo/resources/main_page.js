@@ -44,33 +44,33 @@ ColorDemo.mainPage = SC.Page.design({
       }),
 
       colorPreviewCV: SC.View.design({
-        backgroundColorBinding: SC.Binding.oneWay('ColorDemo.colorViewController.cssText'),
+        backgroundColorBinding: SC.Binding.oneWay('ColorDemo.mainViewController.cssText'),
         classNames: ['color-preview'],
         layout: { border: 1, left: 15, top: 15, right: 15, height: 170 }
       }),
 
       colorPreview1CV: SC.ImageButtonView.design({
         action: function() {
-          var brighterColor = ColorDemo.colorViewController.get('brighterColor');
+          var brighterColor = ColorDemo.mainViewController.get('brighterColor');
 
-          ColorDemo.colorViewController.set('hue', brighterColor.get('hue'));
-          ColorDemo.colorViewController.set('saturation', brighterColor.get('saturation'));
-          ColorDemo.colorViewController.set('luminosity', brighterColor.get('luminosity'));
+          ColorDemo.mainViewController.set('hue', brighterColor.get('hue'));
+          ColorDemo.mainViewController.set('saturation', brighterColor.get('saturation'));
+          ColorDemo.mainViewController.set('luminosity', brighterColor.get('luminosity'));
         },
-        backgroundColorBinding: SC.Binding.oneWay('ColorDemo.colorViewController.brighterCssText'),
+        backgroundColorBinding: SC.Binding.oneWay('ColorDemo.mainViewController.brighterCssText'),
         classNames: ['color-sub-preview'],
         layout: { border: 2, left: 22, top: 22, width: 40, height: 40 }
       }),
 
       colorPreview2CV: SC.ImageButtonView.design({
         action: function() {
-          var darkerColor = ColorDemo.colorViewController.get('darkerColor');
+          var darkerColor = ColorDemo.mainViewController.get('darkerColor');
 
-          ColorDemo.colorViewController.set('hue', darkerColor.get('hue'));
-          ColorDemo.colorViewController.set('saturation', darkerColor.get('saturation'));
-          ColorDemo.colorViewController.set('luminosity', darkerColor.get('luminosity'));
+          ColorDemo.mainViewController.set('hue', darkerColor.get('hue'));
+          ColorDemo.mainViewController.set('saturation', darkerColor.get('saturation'));
+          ColorDemo.mainViewController.set('luminosity', darkerColor.get('luminosity'));
         },
-        backgroundColorBinding: SC.Binding.oneWay('ColorDemo.colorViewController.darkerCssText'),
+        backgroundColorBinding: SC.Binding.oneWay('ColorDemo.mainViewController.darkerCssText'),
         classNames: ['color-sub-preview'],
         layout: { border: 2, right: 22, top: 138, width: 40, height: 40 }
       }),
@@ -90,12 +90,12 @@ ColorDemo.mainPage = SC.Page.design({
           minimum: 0,
           maximum: 359,
           step: 1,
-          valueBinding: SC.Binding.from('ColorDemo.colorViewController.hue')
+          valueBinding: SC.Binding.from('ColorDemo.mainViewController.hue')
         }),
         hValueCV: SC.LabelView.design({
           classNames: ['slider-value'],
           layout: { right: 10, width: 35, height: 24, top: 0 },
-          valueBinding: SC.Binding.oneWay('ColorDemo.colorViewController.hue').
+          valueBinding: SC.Binding.oneWay('ColorDemo.mainViewController.hue').
             transform(function(hue) {
               return parseInt(hue, 10) + '°';
             })
@@ -110,12 +110,12 @@ ColorDemo.mainPage = SC.Page.design({
         sCV: SC.SliderView.design({
           layout: { left: 50, right: 50, height: 24, top: 35 },
           step: 0.01,
-          valueBinding: SC.Binding.from('ColorDemo.colorViewController.saturation')
+          valueBinding: SC.Binding.from('ColorDemo.mainViewController.saturation')
         }),
         sValueCV: SC.LabelView.design({
           classNames: ['slider-value'],
           layout: { right: 10, width: 35, height: 24, top: 35 },
-          valueBinding: SC.Binding.oneWay('ColorDemo.colorViewController.saturation').
+          valueBinding: SC.Binding.oneWay('ColorDemo.mainViewController.saturation').
             transform(function(saturation) {
               return parseInt(saturation * 100, 10) + '%';
             })
@@ -130,12 +130,12 @@ ColorDemo.mainPage = SC.Page.design({
         lCV: SC.SliderView.design({
           layout: { left: 50, right: 50, height: 24, top: 70 },
           step: 0.01,
-          valueBinding: SC.Binding.from('ColorDemo.colorViewController.luminosity')
+          valueBinding: SC.Binding.from('ColorDemo.mainViewController.luminosity')
         }),
         lValueCV: SC.LabelView.design({
           classNames: ['slider-value'],
           layout: { right: 10, width: 35, height: 24, top: 70 },
-          valueBinding: SC.Binding.oneWay('ColorDemo.colorViewController.luminosity').
+          valueBinding: SC.Binding.oneWay('ColorDemo.mainViewController.luminosity').
             transform(function(luminosity) {
               return parseInt(luminosity * 100, 10) + '%';
             })
@@ -149,12 +149,12 @@ ColorDemo.mainPage = SC.Page.design({
         aCV: SC.SliderView.design({
           layout: { left: 50, right: 50, height: 24, top: 105 },
           step: 0.01,
-          valueBinding: SC.Binding.from('ColorDemo.colorViewController.a')
+          valueBinding: SC.Binding.from('ColorDemo.mainViewController.a')
         }),
         aValueCV: SC.LabelView.design({
           classNames: ['slider-value'],
           layout: { right: 10, width: 35, height: 24, top: 105 },
-          valueBinding: SC.Binding.oneWay('ColorDemo.colorViewController.a').
+          valueBinding: SC.Binding.oneWay('ColorDemo.mainViewController.a').
             transform(function(luminosity) {
               return parseInt(luminosity * 100, 10) + '%';
             })
@@ -166,7 +166,7 @@ ColorDemo.mainPage = SC.Page.design({
         controlSize: SC.LARGE_CONTROL_SIZE,
         isEditable: false,
         layout: { left: 20, right: 20, bottom: 15, height: 30 },
-        valueBinding: SC.Binding.from('ColorDemo.colorViewController.cssText')
+        valueBinding: SC.Binding.from('ColorDemo.mainViewController.cssText')
       })
     })
   })
