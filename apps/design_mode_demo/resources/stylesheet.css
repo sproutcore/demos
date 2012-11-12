@@ -1,0 +1,223 @@
+@import "compass/css3";
+@import "compass/css3/user-interface";
+
+$theme.sc-label-view.demo-title {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+
+  &.small {
+    text-align: center;
+  }
+}
+
+$theme.sc-label-view.demo-desc {
+}
+
+$theme.sc-view.frame-body {
+  background-color: #b4b4b4;
+  border-color: white;
+  border-style: dashed;
+
+  &.small {
+    @include border-radius(8px);
+  }
+
+  &.medium {
+    @include border-radius(10px);
+  }
+
+  &.large {
+    @include border-radius(12px);
+  }
+
+  &.xlarge {
+    @include border-radius(3px);
+  }
+}
+
+$theme.sc-view.frame {
+  border-color: white;
+  border-style: dashed;
+}
+
+$theme.sc-view.content {
+  background-color: #92b4ac;
+}
+
+$theme.sc-list-view {
+  .sc-list-item-view {
+    img.icon {
+      height: 14px;
+      margin-top: -7px;
+      width: 14px;
+    }
+  }
+
+  &.xlarge {
+    label {
+      font-size: 17px;
+      height: 24px;
+      left: 28px;
+      line-height: 24px;
+      margin-top: -12px;
+    }
+  }
+}
+
+$theme.sc-menu {
+  .menu-item.has-icon {
+    img {
+      height: 14px;
+      width: 14px;
+      left: 16px;
+    }
+  }
+}
+
+$theme.sc-view.navbar {
+  @include box-shadow(0px 0px 2px rgba(0, 0, 0, 0.4));
+  background-color: #50b484;
+
+  .sc-label-view.title {
+    line-height: 18px;
+    text-align: center;
+    text-shadow: rgba(255,255,255,0.5) 0 1px 1px;
+
+    &.small, &.medium {
+      font-size: 9px;
+    }
+
+    &.large, &.xlarge {
+      font-size: 12px;
+    }
+  }
+
+  .sc-button-view.toolbar-button {
+    @include border-radius(3px);
+    background-color: #3b8662;
+    border-bottom-color: darkgreen;
+    border-left-color: green;
+    border-right-color: green;
+    border-style: solid;
+    border-top-color: lightgreen;
+
+    .left {
+      background-image: none;
+    }
+
+    .right {
+      background-image: none;
+    }
+
+    .middle {
+      background-image: none;
+    }
+
+    label {
+      color: white;
+      font-family: Verdana, Geneva, Arial, sans-serif;
+      font-size: 7px;
+      height: 13px;
+      line-height: 13px;
+      padding-top: 0px;
+      text-shadow: rgba(0,0,0,0.5) 0 -1px 1px;
+    }
+  }
+}
+
+$theme.sc-view.toolbar {
+  @include box-shadow(0px 0px 2px rgba(0, 0, 0, 0.3));
+  background-color: #41524d;
+
+  /* Override Ace styles on toolbar. */
+  background-image: none;
+
+  /* Override Ace styles on SC.SegmentView. */
+  .sc-segment-view.sc-regular-size {
+    float: left;
+
+    &.sc-first-segment.left, .left {
+      background-image: none;
+    }
+
+    &.sc-last-segment.right, .right {
+      background-image: none;
+    }
+
+    .middle {
+      background-image: none;
+    }
+
+    &.active, &.active.sel, &.sel {
+      &.sc-first-segment.left, .left {
+        background-image: none;
+      }
+
+      &.sc-last-segment.right, .right {
+        background-image: none;
+      }
+
+      .middle {
+        background-image: none;
+      }
+    }
+
+    &.sc-middle-segment, &.sc-last-segment {
+      border-left: 1px solid gray;
+    }
+
+    &.active {
+      background-color: #2b3734;
+    }
+
+    &.sel {
+      background-color: #5a736c;
+    }
+
+    &.active.sel {
+      background-color: #495e58;
+    }
+
+    .sc-button-label {
+      margin-left: 0;
+      margin-right: 0;
+
+      img {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.black-circle-icon {
+  @include slice("black-circle.png");
+}
+
+.black-diamond-icon {
+  @include slice("black-diamond.png");
+}
+
+.black-square-icon {
+  @include slice("black-square.png");
+}
+
+.black-triangle-icon {
+  @include slice("black-triangle.png");
+}
+
+.circle-icon {
+  @include slice("circle-icon.png");
+}
+
+.diamond-icon {
+  @include slice("diamond-icon.png");
+}
+
+.square-icon {
+  @include slice("square-icon.png");
+}
+
+.triangle-icon {
+  @include slice("triangle-icon.png");
+}
