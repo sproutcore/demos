@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   SproutCore - JavaScript Application Framework
-// Copyright: ©2012 7x7 Software, Inc.
+// Copyright: ©2013 7x7 Software, Inc.
 // License:   Licensed under MIT license
 // ==========================================================================
 /*globals DesignModeDemo*/
