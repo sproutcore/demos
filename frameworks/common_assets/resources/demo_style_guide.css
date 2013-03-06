@@ -1,0 +1,56 @@
+@import "compass/css3";
+
+body {
+  .sc-view {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+  }
+}
+
+#demo-heading {
+  @include background-image(linear-gradient(top, #6F93B5, #547396));
+  border-color: #000;
+  border-style: solid;
+
+  $theme.demo-title {
+    color: white;
+    line-height: 24px;
+    font-size: 19px;
+    font-weight: bold;
+    text-shadow: rgb(0,0,0) 0px -1px 1px;
+  }
+}
+
+#demo-desc {
+  @include box-shadow(rgba(0,0,0,0.5) 0px 1px 2px);
+  background-color: #CFE1EE;
+  border-color: #000;
+  border-style: solid;
+
+  .label {
+    font-size: 14px;
+    margin: 18px;
+  }
+}
+
+#demo-body {
+  @include background-image(sc_static('cross.png'), sc_static('pixels.png'), linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,0.5)));
+  background-color: #3a9bee;
+}
+
+$theme.demo-content {
+  @include slice("bg.png", $repeat: repeat);
+  @include box-shadow(rgba(0,0,0,0.25) 0px 2px 5px);
+  border: 1px solid #505050;
+}
+
+.right-icon {
+  img {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+/* icons */
+.view-source-icon {
+  @include slice("script-code.png");
+}

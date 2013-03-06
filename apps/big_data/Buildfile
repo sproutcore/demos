@@ -11,5 +11,5 @@
 # It is better to add :required targets here than in the global Buildfile.
 config :big_data,
 
-  # Include the desktop and datastore frameworks
-  :required => [:"sproutcore/desktop", :"sproutcore/datastore"]
+  # Include the common_assets (sproutcore/desktop) and sproutcore/datastore frameworks
+  :required => [:"sproutcore/datastore", :common_assets]

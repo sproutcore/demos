@@ -7,6 +7,6 @@
 
 // American English
 SC.stringsFor('en', {
-  "_DemoTitle": "SC.Color Demo",
-  "_DemoDescription": "In this demo we bind several controls to an SC.Color object that we've created.  SC.Color allows us to modify color components and performs the many calculations needed to return the color in different formats.  See the source <a href=\"https://github.com/sproutcore/demos/tree/master/apps/color_demo\" target=\"_blank\" title=\"Color Demo Source on Github\">here</a>."
+  "_DemoTitle": "Working with Color",
+  "_DemoDescription": "In this demo we bind several controls to an SC.Color object that we've created.  SC.Color allows us to easily work with colors, such as modifying individual components of the color and transforming the color into different color spaces.<br><br>Key SproutCore technologies used in this demo: SC.Color, Bindings."
 });
