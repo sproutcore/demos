@@ -1,0 +1,50 @@
+@import "compass/css3";
+
+$theme.sc-label-view.demo-title {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+$theme.sc-label-view.demo-desc {
+}
+
+$theme.list-box {
+  @include box-shadow(rgba(0,0,0,0.25) 0px 2px 5px);
+  background-color: #80b4c3;
+  border: 1px solid #505050;
+}
+
+$theme.sc-scroll-view {
+  border-bottom: 1px solid #505050;
+}
+
+$theme.sc-collection-item {
+  border-bottom: 1px solid #E0E0E0;
+  border-top: 1px solid #f6f6f6;
+
+  label {
+    font-size: 20px;
+    line-height: 42px;
+    margin-left: 8px;
+  }
+
+  &.sel {
+    @include background-image(linear-gradient(top, #7eb7f2, #5c9def));
+    border-top-color: #6ca6ee;
+  }
+
+  &.sc-group-item {
+    background-color: #bfbfbf;
+    border-bottom: 1px solid #999999;
+    border-top: 1px solid #999999;
+
+    label {
+      color: #FFF;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 20px;
+      text-shadow: rgba(0, 0, 0, 0.5) 0 1px 1px;
+    }
+  }
+}
