@@ -26,7 +26,7 @@ BigData.mainPage = SC.Page.create({
     descCV: SC.LabelView.extend({
       classNames: ['demo-desc'],
       escapeHTML: false,
-      layout: { centerX: 0, height: 120, width: 400, top: 45 },
+      layout: { centerX: 0, height: 175, width: 400, top: 45 },
       localize: true,
       value: '_DemoDescription'
     }),
@@ -34,7 +34,7 @@ BigData.mainPage = SC.Page.create({
     listBoxCV: SC.View.extend({
       childViews: ['listCV', 'busyCV', 'activeQueryButton'],
       classNames: ['list-box'],
-      layout: { border: 1, centerX: 0, bottom: 150, top: 250, width: 320 },
+      layout: { border: 1, centerX: 0, bottom: 100, top: 250, width: 320 },
 
       listCV: SC.ScrollView.extend({
         layout: { borderBottom: 1, bottom: 50 },
@@ -64,9 +64,9 @@ BigData.mainPage = SC.Page.create({
         itemValueKey: 'value',
         itemWidthKey: 'width',
         items: [
-          { title: "_Flat", value: 'flatArrayQuery', width: 80 },
-          { title: "_Grouped", value: 'groupedArrayQuery', width: 80 },
-          { title: "_Windowed", value: 'windowedArrayQuery', width: 80 }
+          { title: "_Flat", value: 'flatArrayQuery', width: 90 },
+          { title: "_Grouped", value: 'groupedArrayQuery', width: 90 }
+          // { title: "_Windowed", value: 'windowedArrayQuery', width: 80 }
         ],
         layout: { bottom: 10, centerX: 0, height: 30, width: 280 },
         localize: true,
