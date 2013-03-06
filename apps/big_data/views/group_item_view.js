@@ -11,20 +11,26 @@ BigData.GroupItemView = SC.View.extend({
 
   displayProperties: ['content'],
 
-  render: function (context, firstTime) {
-    var content = this.get('content'),
-      title;
+  /** Create the layer. */
+  render: function (context) {
+    var content = this.get('content');
 
+    context.push('<label>' + this._titleForContent(content) + '</label>');
+  },
+
+  /** Update the layer. */
+  update: function (jqElement) {
+    var content = this.get('content');
+
+    jqElement.find('label').html(this._titleForContent(content));
+  },
+
+  /** @private Return the appropriate title. */
+  _titleForContent: function (content) {
     if (content) {
-      title = content.get('title');
+      return content.get('title');
     } else {
-      title = "_Loading".loc();
-    }
-
-    if (firstTime) {
-      context.push('<label>' + title + '</label>');
-    } else {
-      context.$().find('label').html(title);
+      return "_Loading".loc();
     }
   }
 

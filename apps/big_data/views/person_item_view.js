@@ -11,25 +11,30 @@ BigData.PersonItemView = SC.View.extend({
 
   displayProperties: ['content', 'isSelected'],
 
-  render: function (context, firstTime) {
+  /** Create the layer. */
+  render: function (context) {
     var content = this.get('content'),
-      fullName = "",
       isSelected = this.get('isSelected');
 
     context.setClass('sel', isSelected);
+    context.push('<label>' + this._fullNameForContent(content) + '</label>');
+  },
 
+  /** Update the layer. */
+  update: function (jqElement) {
+    var content = this.get('content'),
+      isSelected = this.get('isSelected');
+
+    jqElement.setClass('sel', isSelected);
+    jqElement.find('label').html(this._fullNameForContent(content));
+  },
+
+  /** @private Return the appropriate title. */
+  _fullNameForContent: function (content) {
     if (content) {
-      fullName = content.get('givenName') + ' <strong>' + content.get('familyName') + '</strong>';
+      return content.get('givenName') + ' <strong>' + content.get('familyName') + '</strong>';
     } else {
-      fullName = "_Loading".loc();
-    }
-
-    if (firstTime) {
-      // In this case it's easiest just to push the whole content at once.
-      context.push('<label>' + fullName + '</label>');
-    } else {
-      // Replace the inner content only.
-      context.$().find('label').html(fullName);
+      return "_Loading".loc();
     }
   }
 
