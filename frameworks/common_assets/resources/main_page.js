@@ -61,7 +61,7 @@ CommonAssets.mainPage = SC.Page.create({
       childViews: ['textView'],
       layout: { borderBottom: 1, top: 40, height: 200 },
       layerId: 'demo-desc',
-      shouldHide: true,
+      shouldHide: false,
       shouldHideBinding: SC.Binding.oneWay('CommonAssets.descriptionIsVisible').not(),
 
       didAppendToDocument: function () {
