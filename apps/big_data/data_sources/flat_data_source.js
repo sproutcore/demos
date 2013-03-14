@@ -133,12 +133,11 @@ BigData.flatDataSource = SC.DataSource.create({
   */
   fetch: function (store, query) {
     var handled = false,
-      parameters = query.parameters || {},
       recordType = query.recordType,
       sparseArray;
 
     // We handle the request if we're the active data source.
-    if (recordType === BigData.Person && parameters.targetDataSource === 'flatDataSource') {
+    if (recordType === BigData.Person && query.targetDataSource === 'flatDataSource') {
       // We will create a sparse array for the store keys so that we can page in
       // data lazily as necessary. We use 100 as the rangeWindowSize, because
       // our simulated server responses are always 100 items long.

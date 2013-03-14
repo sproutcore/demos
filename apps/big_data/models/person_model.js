@@ -24,6 +24,6 @@ BigData.Person = SC.Record.extend(
 // Because there are too many records to load and order all within the client,
 // we use remote queries.  This means that the server maintains the record order
 // and we don't have to load them all in order to search or sort them.
-BigData.Person.flatArrayQuery = SC.Query.remote(BigData.Person, null, { targetDataSource: 'flatDataSource' });
-BigData.Person.groupedArrayQuery = SC.Query.remote(BigData.Person, null, { targetDataSource: 'groupedDataSource' });
-BigData.Person.windowedArrayQuery = SC.Query.remote(BigData.Person, null, { targetDataSource: 'windowedDataSource' });
+BigData.Person.flatArrayQuery = SC.Query.remote(BigData.Person, { targetDataSource: 'flatDataSource' });
+BigData.Person.groupedArrayQuery = SC.Query.remote(BigData.Person, { targetDataSource: 'groupedDataSource' });
+BigData.Person.windowedArrayQuery = SC.Query.remote(BigData.Person, { targetDataSource: 'windowedDataSource' });

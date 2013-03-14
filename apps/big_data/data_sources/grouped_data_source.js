@@ -298,13 +298,12 @@ BigData.groupedDataSource = SC.DataSource.create({
   */
   fetch: function (store, query) {
     var handled = false,
-      parameters = query.parameters || {},
       recordType = query.recordType,
       backingSparseArray,
       sparseArray;
 
     // We handle the request if we're the active data source.
-    if (recordType === BigData.Person && parameters.targetDataSource === 'groupedDataSource') {
+    if (recordType === BigData.Person && query.targetDataSource === 'groupedDataSource') {
       // This sparse array will contain group keys and will be backed by another
       // sparse array that will actually load in data.
       sparseArray = SC.SparseArray.create({
