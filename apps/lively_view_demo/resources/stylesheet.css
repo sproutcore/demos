@@ -1,0 +1,41 @@
+@import "compass/css3";
+
+$theme.header-view {
+  background-color: rgba(0,0,0,0.4);
+  border-color: #191919;
+}
+
+$theme.sample-view {
+  @include border-radius(14px);
+  border-color: white;
+  border-style: dashed;
+  color: white;
+  font-family: "American Typewriter", "Monaco", "Menlo";
+  font-size: 65px;
+  line-height: 100px;
+  text-align: center;
+
+  &.view1 {
+    background-color: rgba(44, 133, 179, 0.500);
+  }
+
+  &.view2 {
+    background-color: rgba(179, 167, 68, 0.500);
+  }
+
+  &.view3 {
+    background-color: rgba(69, 179, 64, 0.500);
+  }
+}
+
+$theme.title {
+  color: white;
+  font-size: 17px;
+  line-height: 25px;
+  text-align: center;
+  text-shadow: rgba(0, 0, 0, 0.3) 0 -1px 1px;
+  // Light text on dark backgrounds is pretty attrocious on Mac due to subpixel
+  // antialiasing.  Plus H/W rendering toggles to antialiased font smoothing
+  // anyway in Safari and so it makes the text flicker without this.
+  -webkit-font-smoothing: antialiased;
+}
