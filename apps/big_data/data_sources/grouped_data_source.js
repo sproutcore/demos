@@ -260,7 +260,7 @@ BigData.backingArrayDelegate = SC.Object.create({
       // status back to READY.
       recArray = store.find(query);
       recArray.set('groupIndexes', groupIndexes);
-      store.loadQueryResults(query, sparseArray);
+      store.dataSourceDidFetchQuery(query, sparseArray);
 
       // The other delegate needs to know the group indexes that are in use.
       this.set('groupIndexes', groupIndexes);

@@ -14,11 +14,11 @@ CommonAssets.mainPage = SC.Page.create({
   // load.
   mainPane: SC.MainPane.extend({
 
-    childViews: ['bodyView', 'descView', 'headingView'],
+    childViews: ['bodyView', 'headingView', 'descView'],
 
     headingView: SC.View.extend({
       childViews: ['titleView', 'viewSourceButton', 'toggleDescButton'],
-      layout: { borderBottom: 1, height: 40 },
+      layout: { borderBottom: 1, height: 40, zIndex: 3 },
       layerId: 'demo-heading',
 
       titleView: SC.LabelView.extend({
@@ -59,31 +59,23 @@ CommonAssets.mainPage = SC.Page.create({
 
     descView: SC.View.extend({
       childViews: ['textView'],
-      layout: { borderBottom: 1, top: 40, height: 200 },
+      layout: { borderBottom: 1, top: 40, height: 200, zIndex: 2 },
       layerId: 'demo-desc',
-      shouldHide: false,
-      shouldHideBinding: SC.Binding.oneWay('CommonAssets.descriptionIsVisible').not(),
+      isVisible: false,
+      isVisibleBinding: SC.Binding.oneWay('CommonAssets.descriptionIsVisible'),
+      wantsAcceleratedLayer: true,
 
-      didAppendToDocument: function () {
+      transitionShow: SC.View.MOVE,
+      transitionShowOptions: { direction: 'down' },
+      transitionHide: SC.View.MOVE,
+      transitionHideOptions: { direction: 'up' },
+
+      willShowInDocument: function () {
         var label = this.$('.label')[0];
 
         // Adjust ourself to fit the label + its known padding of 36px.
         this.adjust('height', label.scrollHeight + 36);
       },
-
-      shouldHideDidChange: function () {
-        var shouldHide = this.get('shouldHide'),
-          frame = this.get('borderFrame');
-
-        if (shouldHide) {
-          this.animate('top', 40 - frame.height, { duration: 0.4 }, function () {
-            // this.set('isVisible', false);
-          });
-        } else {
-          // this.set('isVisible', true);
-          this.animate('top', 40, { duration: 0.4 });
-        }
-      }.observes('shouldHide'),
 
       textView: SC.LabelView.extend({
         classNames: ['demo-desc'],

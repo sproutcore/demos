@@ -8,6 +8,7 @@ body {
 
 #demo-heading {
   @include background-image(linear-gradient(top, #6F93B5, #547396));
+  @include box-shadow(rgba(0,0,0,0.3) 0px 1px 2px);
   border-color: #000;
   border-style: solid;
 
@@ -16,12 +17,16 @@ body {
     line-height: 24px;
     font-size: 19px;
     font-weight: bold;
-    text-shadow: rgb(0,0,0) 0px -1px 1px;
+    text-shadow: rgba(0,0,0,0.3) 0px -1px 1px;
+  // Light text on dark backgrounds is pretty attrocious on Mac due to subpixel
+  // antialiasing.  Plus H/W rendering toggles to antialiased font smoothing
+  // anyway in Safari and so it makes the text flicker without this.
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 #demo-desc {
-  @include box-shadow(rgba(0,0,0,0.5) 0px 1px 2px);
+  @include box-shadow(rgba(0,0,0,0.3) 0px 1px 2px);
   background-color: #CFE1EE;
   border-color: #000;
   border-style: solid;

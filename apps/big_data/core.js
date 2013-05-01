@@ -7,7 +7,7 @@
 
 /** @namespace
 
-  @extends SC.Object
+  @extends SC.Application
 */
 BigData = SC.Application.create(
   /** @scope BigData.prototype */ {

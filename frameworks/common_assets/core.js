@@ -22,7 +22,7 @@ CommonAssets = SC.Object.create({
   demoContent: null,
 
   /** @private */
-  descriptionIsVisible: true,
+  descriptionIsVisible: false,
 
   /**
     Set this to the url of your demo content source.

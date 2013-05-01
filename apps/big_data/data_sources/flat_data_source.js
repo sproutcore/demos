@@ -103,7 +103,7 @@ BigData.flatArrayDelegate = SC.Object.create({
 
       // Update the results of the query in order to set the RecordArray
       // status back to READY.
-      store.loadQueryResults(query, sparseArray);
+      store.dataSourceDidFetchQuery(query, sparseArray);
 
       SC.info('   _requestCompleted: %@ - %@'.fmt(start, start + results.length - 1));
 
