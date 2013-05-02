@@ -1,5 +1,9 @@
 @import "compass/css3";
 
+$theme.sc-main.sc-pane {
+  -webkit-backface-visibility: hidden;
+}
+
 $theme.header-view {
   background-color: rgba(0,0,0,0.4);
   border-color: #191919;
