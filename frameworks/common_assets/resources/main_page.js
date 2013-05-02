@@ -65,9 +65,9 @@ CommonAssets.mainPage = SC.Page.create({
       isVisibleBinding: SC.Binding.oneWay('CommonAssets.descriptionIsVisible'),
       wantsAcceleratedLayer: true,
 
-      transitionShow: SC.View.MOVE,
+      transitionShow: SC.View.SLIDE,
       transitionShowOptions: { direction: 'down' },
-      transitionHide: SC.View.MOVE,
+      transitionHide: SC.View.SLIDE,
       transitionHideOptions: { direction: 'up' },
 
       willShowInDocument: function () {

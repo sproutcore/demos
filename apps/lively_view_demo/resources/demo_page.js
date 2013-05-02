@@ -39,7 +39,7 @@ LivelyView.demoPage = SC.Page.create({
         itemValueKey: 'value',
         items: [
           { title: "_Fade", value: SC.View.FADE },
-          { title: "_Move", value: SC.View.MOVE },
+          { title: "_Move", value: SC.View.SLIDE },
           { title: "_Bounce", value: SC.View.BOUNCE },
           { title: "_Spring", value: SC.View.SPRING },
           { title: "_Scale", value: SC.View.SCALE },
@@ -100,7 +100,7 @@ LivelyView.demoPage = SC.Page.create({
         itemValueKey: 'value',
         items: [
           { title: "_Fade", value: SC.View.FADE },
-          { title: "_Move", value: SC.View.MOVE },
+          { title: "_Move", value: SC.View.SLIDE },
           { title: "_Bounce", value: SC.View.BOUNCE },
           { title: "_Spring", value: SC.View.SPRING },
           { title: "_Scale", value: SC.View.SCALE },
@@ -171,7 +171,7 @@ LivelyView.demoPage = SC.Page.create({
         value: "1",
 
         // Automatic transitions.
-        transitionIn: SC.View.MOVE,
+        transitionIn: SC.View.SLIDE,
         transitionInOptions: { delay: 0.35 },
 
         transitionShowBinding: SC.Binding.oneWay('LivelyView.showTransition'),
@@ -189,7 +189,7 @@ LivelyView.demoPage = SC.Page.create({
         value: "2",
 
         // Automatic transitions.
-        transitionIn: SC.View.MOVE,
+        transitionIn: SC.View.SLIDE,
         transitionInOptions: { delay: 0.6, direction: 'left' },
 
         transitionShowBinding: SC.Binding.oneWay('LivelyView.showTransition'),
@@ -227,7 +227,7 @@ LivelyView.demoPage = SC.Page.create({
         },
 
         // Automatic transitions.
-        transitionIn: SC.View.MOVE,
+        transitionIn: SC.View.SLIDE,
         transitionInOptions: { delay: 0.85 },
 
         transitionShowBinding: SC.Binding.oneWay('LivelyView.showTransition'),
