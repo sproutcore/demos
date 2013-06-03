@@ -16,12 +16,13 @@ ColorDemo.demoPage = SC.Page.create({
 
     logoCV: SC.ImageView.design({
       layout: { centerX: 0, top: 25, width: 150, height: 150 },
-      value: sc_static('sproutcore-logo.png')
+      value: sc_static('sproutcore-128.png')
     }),
 
     colorPreviewCV: SC.View.design({
       backgroundColorBinding: SC.Binding.oneWay('ColorDemo.mainViewController.cssText'),
       classNames: ['color-preview'],
+      displayProperties: ['backgroundColor'],
       layout: { border: 1, left: 15, top: 15, right: 15, height: 170 }
     }),
 
