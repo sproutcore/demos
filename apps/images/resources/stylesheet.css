@@ -1,0 +1,78 @@
+@import "compass/css3";
+
+// Add your custom CSS styles here.
+//
+// You may want to create additional stylesheet files for every page or pane
+// within your application rather than placing all your CSS in here.  In any
+// case, all stylesheet files will be combined into a single stylesheet on
+// build to let it load super fast.
+//
+// Remember, Compass (http://compass-style.org) is built in and you can use
+// SCSS syntax (http://sass-lang.com/) even though stylesheet files should end
+// with the .css extension.
+//
+// Learn more on styling your app here: http://sproutcore.com/guides/chance.html
+
+
+.arrow {
+  @include slice('arrow.png');
+}
+
+$theme.sc-view {
+  &.normal-image-overlay {
+    background-color: black;
+    opacity: 0.25;
+  }
+
+  &.control-view {
+    border-color: black;
+    border-style: solid;
+  }
+}
+
+
+$theme.sc-image-view {
+
+  &.unscaled-image {
+    border-color: black;
+    border-style: solid;
+    opacity: 0.7;
+  }
+
+  &.shadow-image {
+    border-style: dashed;
+    border-color: black;
+    opacity: 0.3;
+  }
+
+  &.scaled-image {
+    background-color: rgba(130, 130, 130, 0.6);
+    border-color: black;
+    border-style: solid;
+  }
+}
+
+$theme.sc-label-view {
+  &.control-title {
+    line-height: 25px;
+    font-size: 13px;
+  }
+
+  &.title {
+    @include border-right-radius(15px);
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+
+    &.dest {
+      @include border-left-radius(15px);
+    }
+
+    .dimensions {
+      font-family: Monaco,'Courier New',monospace;
+      font-size: 13px;
+    }
+  }
+
+}
