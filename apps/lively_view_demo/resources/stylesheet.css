@@ -1,9 +1,5 @@
 @import "compass/css3";
 
-body {
-  @include perspective(500);
-}
-
 $theme.sc-main.sc-pane {
   -webkit-backface-visibility: hidden;
 }

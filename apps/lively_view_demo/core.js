@@ -98,7 +98,7 @@ LivelyView.mixin({
       view.adjust({
         scale: inPlace ? view.get('layout').scale || 0 : 0,
         rotateX: inPlace ? view.get('layout').rotateX || 90 : 90,
-        rotateY: inPlace ? view.get('layout').rotateY || -90 : -90,
+        // rotateY: inPlace ? view.get('layout').rotateY || -90 : -90,
         rotateZ: inPlace ? view.get('layout').rotateZ || -180 : -180
       });
     },
@@ -108,7 +108,7 @@ LivelyView.mixin({
       view.animate({
         'scale': finalLayout.scale || 1,
         'rotateX': finalLayout.rotateX || 0,
-        'rotateY': finalLayout.rotateY || 0,
+        // 'rotateY': finalLayout.rotateY || 0,
         'rotateZ': finalLayout.rotateZ || 0
       }, {
         delay: options.delay || 0,
@@ -124,7 +124,7 @@ LivelyView.mixin({
       view.animate({
         'scale': 0,
         'rotateX': 90,
-        'rotateY': -90,
+        // 'rotateY': -90,
         'rotateZ': -180
       }, {
         delay: options.delay || 0,
