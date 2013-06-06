@@ -10,13 +10,26 @@ LivelyView.demoPage = SC.Page.create({
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
+  // demoContent: SC.ButtonView.extend({
+  //   action: 'appendOrRemovePane',
+  //   controlSize: SC.JUMBO_CONTROL_SIZE,
+  //   // Disable the button while the transitions are occurring.
+  //   isEnabledBinding: SC.Binding.oneWay('LivelyView.viewsAreFullyShown'),
+  //   layout: { centerX: 0, centerY: 0, width: 180, height: 44 },
+  //   localize: true,
+  //   target: LivelyView,
+  //   title: "_Append"
+  // }),
+
   demoContent: SC.View.extend({
     childViews: ['bodyView', 'headerView'],
     classNames: ['demo-content'],
     layout: { border: 1, centerX: 0, centerY: 0, width: 420, height: 520, zIndex: 1 },
 
     // Automatic transitions.
-    transitionIn: LivelyView.POP,
+    transitionIn: SC.View.POP,
+    transitionOut: SC.View.POP,
+    transitionOutOptions: { delay: 0.85 },
 
     headerView: SC.View.extend({
       classNames: ['header-view'],
@@ -43,7 +56,8 @@ LivelyView.demoPage = SC.Page.create({
           { title: "_Bounce", value: SC.View.BOUNCE },
           { title: "_Spring", value: SC.View.SPRING },
           { title: "_Scale", value: SC.View.SCALE },
-          { title: "_Pop", value: LivelyView.POP }
+          { title: "_Pop", value: SC.View.POP },
+          { title: "_Twist", value: LivelyView.TWIST }
         ],
         valueBinding: 'LivelyView.hideTransition',
 
@@ -104,7 +118,8 @@ LivelyView.demoPage = SC.Page.create({
           { title: "_Bounce", value: SC.View.BOUNCE },
           { title: "_Spring", value: SC.View.SPRING },
           { title: "_Scale", value: SC.View.SCALE },
-          { title: "_Pop", value: LivelyView.POP }
+          { title: "_Pop", value: SC.View.POP },
+          { title: "_Twist", value: LivelyView.TWIST }
         ],
         valueBinding: 'LivelyView.showTransition',
 
@@ -174,6 +189,9 @@ LivelyView.demoPage = SC.Page.create({
         transitionIn: SC.View.SLIDE,
         transitionInOptions: { delay: 0.35 },
 
+        transitionOut: SC.View.SLIDE,
+        transitionOutOptions: { delay: 0.6, direction: 'left', duration: 1 },
+
         transitionShowBinding: SC.Binding.oneWay('LivelyView.showTransition'),
         transitionShowOptionsBinding: SC.Binding.oneWay('LivelyView.showTransitionOptions'),
 
@@ -191,6 +209,9 @@ LivelyView.demoPage = SC.Page.create({
         // Automatic transitions.
         transitionIn: SC.View.SLIDE,
         transitionInOptions: { delay: 0.6, direction: 'left' },
+
+        transitionOut: SC.View.SLIDE,
+        transitionOutOptions: { delay: 0.35, duration: 1 },
 
         transitionShowBinding: SC.Binding.oneWay('LivelyView.showTransition'),
         transitionShowOptionsBinding: SC.Binding.oneWay('LivelyView.showTransitionOptions')
@@ -229,6 +250,9 @@ LivelyView.demoPage = SC.Page.create({
         // Automatic transitions.
         transitionIn: SC.View.SLIDE,
         transitionInOptions: { delay: 0.85 },
+
+        transitionOut: SC.View.SLIDE,
+        transitionOutOptions: { direction: 'left', duration: 0.5 },
 
         transitionShowBinding: SC.Binding.oneWay('LivelyView.showTransition'),
         transitionShowOptionsBinding: SC.Binding.oneWay('LivelyView.showTransitionOptions')
