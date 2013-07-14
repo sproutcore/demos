@@ -1,0 +1,121 @@
+@import "compass/css3";
+
+// Add your custom CSS styles here.
+//
+// You may want to create additional stylesheet files for every page or pane
+// within your application rather than placing all your CSS in here.  In any
+// case, all stylesheet files will be combined into a single stylesheet on
+// build to let it load super fast.
+//
+// Remember, Compass (http://compass-style.org) is built in and you can use
+// SCSS syntax (http://sass-lang.com/) even though stylesheet files should end
+// with the .css extension.
+//
+// Learn more on styling your app here: http://sproutcore.com/guides/chance.html
+
+// Example.  This style is applied to the labelView child view.
+
+$theme.sc-view {
+  &.wrapper-view {
+    @include border-radius(8px);
+    background-color: rgba(255,255,255,0.25);
+    border-color: #ffffff;
+  }
+
+  &.drop-placeholder {
+    @include border-radius(14px);
+    border-color: #ffffff;
+    border-style: dotted;
+  }
+
+  &.sc-ghost-view {
+    overflow: visible;
+
+    .sample-view {
+      @include box-shadow(rgba(0,0,0,0.25) 0 3px 2px);
+    }
+
+    .sample-template-view {
+      @include box-shadow(rgba(0,0,0,0.25) 0 3px 2px);
+    }
+  }
+
+  &.sample-view {
+    @include border-radius(14px);
+    border-color: #ffffff;
+    cursor: move;
+
+    &.is-dragging {
+      border-style: dotted;
+      background-color: transparent;
+
+      .sc-label-view {
+        display: none;
+      }
+    }
+
+    .sc-label-view {
+      color: white;
+      cursor: move;
+      font-family: "American Typewriter", "Monaco", "Menlo";
+      text-align: center;
+      font-size: 50px;
+      line-height: 100px;
+    }
+  }
+
+  &.sample-template-view {
+    @include border-radius(14px);
+    border-color: #ffffff;
+
+    .sc-label-view {
+      color: white;
+      font-family: "American Typewriter", "Monaco", "Menlo";
+      text-align: center;
+      font-size: 30px;
+      line-height: 100px;
+    }
+  }
+
+  &.resize-handle {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: row-resize;
+
+    .handle-image {
+      @include slice('handle.png');
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -15px;
+      margin-top: -4px;
+      height: 7px;
+      width: 30px;
+    }
+  }
+
+  &.view1 {
+    background-color: rgba(44, 133, 179, 0.500);
+  }
+
+  &.view2 {
+    background-color: rgba(179, 167, 68, 0.500);
+  }
+
+  &.view3 {
+    background-color: rgba(69, 179, 64, 0.500);
+  }
+
+  &.view4 {
+    background-color: rgba(255, 137, 99, 0.500);
+  }
+}
+
+$theme.sc-label-view {
+  &.form-label {
+    line-height: 30px;
+    text-align: center;
+    color: #FFF;
+    text-shadow: rgba(0, 0, 0, 0.3) 0 -1px 1px;
+    font-size: 14px;
+  }
+}
