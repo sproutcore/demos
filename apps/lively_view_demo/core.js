@@ -16,7 +16,7 @@ LivelyView = SC.Application.create(
   NAMESPACE: 'LivelyView',
   VERSION: '0.1.0',
 
-  showTransition: SC.View.FADE,
+  showTransition: SC.View.FADE_IN,
 
   showTransitionOptions: function () {
     return { direction: this.get('showTransitionDirection') };
@@ -28,17 +28,17 @@ LivelyView = SC.Application.create(
     var showTransition = this.get('showTransition');
 
     switch (showTransition) {
-    case SC.View.FADE:
-    case SC.View.SCALE:
-    case SC.View.POP:
-    case LivelyView.TWIST:
+    case SC.View.FADE_IN:
+    case SC.View.SCALE_IN:
+    case SC.View.POP_IN:
+    case LivelyView.TWIST_IN:
       return false;
     default:
       return true;
     }
   }.property('showTransition').cacheable(),
 
-  hideTransition: SC.View.FADE,
+  hideTransition: SC.View.FADE_OUT,
 
   hideTransitionOptions: function () {
     return { direction: this.get('hideTransitionDirection') };
@@ -50,10 +50,10 @@ LivelyView = SC.Application.create(
     var hideTransition = this.get('hideTransition');
 
     switch (hideTransition) {
-    case SC.View.FADE:
-    case SC.View.SCALE:
-    case SC.View.POP:
-    case LivelyView.TWIST:
+    case SC.View.FADE_OUT:
+    case SC.View.SCALE_OUT:
+    case SC.View.POP_OUT:
+    case LivelyView.TWIST_OUT:
       return false;
     default:
       return true;
@@ -92,9 +92,9 @@ LivelyView = SC.Application.create(
 
 
 LivelyView.mixin({
-  TWIST: {
+  TWIST_IN: {
     /** @private */
-    setupIn: function (view, options, inPlace) {
+    setup: function (view, options, inPlace) {
       view.adjust({
         scale: inPlace ? view.get('layout').scale || 0 : 0,
         rotateX: inPlace ? view.get('layout').rotateX || 90 : 90,
@@ -104,7 +104,7 @@ LivelyView.mixin({
     },
 
     /** @private */
-    runIn: function (view, options, finalLayout, finalFrame) {
+    run: function (view, options, finalLayout, finalFrame) {
       view.animate({
         'scale': finalLayout.scale || 1,
         'rotateX': finalLayout.rotateX || 0,
@@ -117,10 +117,12 @@ LivelyView.mixin({
       }, function (data) {
         this.didTransitionIn();
       });
-    },
+    }
+  },
 
+  TWIST_OUT: {
     /** @private */
-    runOut: function (view, options, finalLayout) {
+    run: function (view, options, finalLayout) {
       view.animate({
         'scale': 0,
         'rotateX': 90,
