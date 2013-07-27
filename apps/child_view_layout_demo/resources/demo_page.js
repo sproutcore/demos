@@ -29,8 +29,8 @@ ChildViewLayoutDemo.demoPage = SC.Page.design({
       childViewLayoutOptionsBinding: SC.Binding.oneWay('ChildViewLayoutDemo.childViewLayoutOptions'),
 
       // Smoothly resize.
-      transitionAdjust: SC.View.SLIDE,
-      transitionAdjustOptions: { duration: 0.2 },
+      transitionAdjust: SC.View.SMOOTH_ADJUST,
+      transitionAdjustOptions: { duration: 0.25 },
 
       /** @private SC.View. Don't transition when doing live resize. */
       beginLiveResize: function () {
@@ -43,7 +43,7 @@ ChildViewLayoutDemo.demoPage = SC.Page.design({
       endLiveResize:  function () {
         sc_super();
 
-        this.set('transitionAdjust', SC.View.SLIDE);
+        this.set('transitionAdjust', SC.View.SMOOTH_ADJUST);
       },
 
       // -----------------------------------------------------------------------
@@ -132,9 +132,7 @@ ChildViewLayoutDemo.demoPage = SC.Page.design({
 
       /** @private SC.DropTarget protocol. */
       dragEntered: function (drag, evt) {
-        var dragView = drag.dragView;
-
-        // dragView.set('isVisible', true);
+        // var dragView = drag.dragView;
       },
 
       /** @private SC.DropTarget protocol. */
@@ -144,15 +142,13 @@ ChildViewLayoutDemo.demoPage = SC.Page.design({
         if (this.get('childViews').indexOf(dragView) >= 0) {
           this.removeChild(dragView);
         }
-        // dragView.set('isVisible', false);
       },
 
       /** @private SC.DropTarget protocol. */
       dragEnded: function (drag, evt) {
         var dragView = drag.dragView;
 
-        // dragView.set('isVisible', true);
-        dragView.set('transitionAdjust', SC.View.SLIDE);
+        dragView.set('transitionAdjust', SC.View.SMOOTH_ADJUST);
       },
 
       /** @private SC.DropTarget protocol. */
@@ -199,7 +195,7 @@ ChildViewLayoutDemo.demoPage = SC.Page.design({
         localize: true,
         useAbsoluteLayout: true,
         value: "_DragLabel"
-      }),
+      })
     })
 
     // UNUSED.

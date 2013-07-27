@@ -22,10 +22,10 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
   // Use H/W accelerated positioning while dragging.
   wantsAcceleratedLayer: true,
 
-  transitionAdjust: SC.View.SLIDE,
-  transitionAdjustOptions: { duration: 0.2 },
-  transitionShow: SC.View.SCALE,
-  transitionHide: SC.View.SCALE,
+  transitionAdjust: SC.View.SMOOTH_ADJUST,
+  transitionAdjustOptions: { duration: 0.25 },
+  transitionShow: SC.View.SCALE_IN,
+  transitionHide: SC.View.SCALE_OUT,
 
   label: SC.LabelView.extend({
     layout: { height: 100, centerY: 0 },
@@ -74,7 +74,7 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
 
       // Clean up.
       delete this._initialPoint;
-      parentView.set('transitionAdjust', SC.View.SLIDE);
+      parentView.set('transitionAdjust', SC.View.SMOOTH_ADJUST);
 
       return true;
     }
@@ -87,7 +87,7 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
 
   /** @private SC.View. Allowing transitioning again. */
   endLiveResize:  function () {
-    this.set('transitionAdjust', SC.View.SLIDE);
+    this.set('transitionAdjust', SC.View.SMOOTH_ADJUST);
   },
 
   mouseDown: function (evt) {

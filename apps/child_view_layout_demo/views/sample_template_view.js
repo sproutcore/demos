@@ -20,8 +20,8 @@
 //   // Use H/W accelerated positioning while dragging.
 //   wantsAcceleratedLayer: true,
 
-//   transitionShow: SC.View.SCALE,
-//   transitionHide: SC.View.SCALE,
+//   transitionShow: SC.View.SCALE_IN,
+//   transitionHide: SC.View.SCALE_OUT,
 
 //   label: SC.LabelView.extend({
 //     layout: { height: 100, centerY: 0 },
