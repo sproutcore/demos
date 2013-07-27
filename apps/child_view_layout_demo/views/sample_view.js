@@ -23,7 +23,7 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
   wantsAcceleratedLayer: true,
 
   transitionAdjust: SC.View.SMOOTH_ADJUST,
-  transitionAdjustOptions: { duration: 0.25 },
+  transitionAdjustOptions: { duration: 0.2 },
   transitionShow: SC.View.SCALE_IN,
   transitionHide: SC.View.SCALE_OUT,
 

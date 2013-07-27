@@ -30,7 +30,7 @@ ChildViewLayoutDemo.demoPage = SC.Page.design({
 
       // Smoothly resize.
       transitionAdjust: SC.View.SMOOTH_ADJUST,
-      transitionAdjustOptions: { duration: 0.25 },
+      transitionAdjustOptions: { duration: 0.2 },
 
       /** @private SC.View. Don't transition when doing live resize. */
       beginLiveResize: function () {
