@@ -29,7 +29,7 @@ SC.stringsFor('en', {
   "_ScaleOut": "Scale Out",
   "_SpringIn": "Spring In",
   "_SpringOut": "Spring Out",
-  "_TwistIn": "Twist (Custom) In",
-  "_TwistOut": "Twist (Custom) Out",
+  "_TwistIn": "Twist In (Custom)",
+  "_TwistOut": "Twist Out (Custom)",
   "_Up": "↑"
 });
