@@ -216,7 +216,7 @@ Pickers.mainPage = SC.Page.design({
     // classNames: ['custom-picker'],
     layout: { width: 200, height: 200, border: 1 },
     preferType: SC.PICKER_POINTER,
-    preferMatrix: [3, 2, 0, 1, 3],
+    preferMatrix: [1, 0, 2, 3, 1], // left
     preferMatrixBinding: SC.Binding.oneWay('Pickers.preferMatrix'),
 
     contentView: SC.ImageView.extend({

@@ -40,7 +40,7 @@ Pickers = SC.Application.create(
     return ret;
   }.property('preferMatrixPos').cacheable(),
 
-  preferMatrixPos: 'bottom',
+  preferMatrixPos: 'left',
 
   topPreferMatrix: 'top',
 
