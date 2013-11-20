@@ -61,7 +61,7 @@ DesignModeDemo.tinyAppController = SC.Object.create(SC.SelectionSupport, {
   }.observes('selectedShape'),
 
   showMenu: function(sender) {
-    DesignModeDemo.mainPage.get('menuPicker').popup(sender);
+    DesignModeDemo.demoPage.get('menuPicker').popup(sender);
   }
 
 });

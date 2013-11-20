@@ -7,7 +7,12 @@
 
 
 DesignModeDemo.main = function main() {
-  DesignModeDemo.getPath('mainPage.mainPane').append();
+  // Configure the shared demo page.
+  CommonAssets.set('sourceURL', 'https://github.com/sproutcore/demos/tree/master/apps/design_mode_layout_demo');
+  CommonAssets.set('demoContent', 'DesignModeDemo.demoPage.demoContent');
+
+  // Append the main demo pane.
+  CommonAssets.mainPage.get('mainPane').append();
 };
 
 function main() { DesignModeDemo.main(); }

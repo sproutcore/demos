@@ -5,45 +5,26 @@
 /*globals DesignModeDemo */
 
 // This page describes the main user interface for your application.
-DesignModeDemo.mainPage = SC.Page.design({
+DesignModeDemo.demoPage = SC.Page.design({
 
   // The main pane is made visible on screen as soon as your app is loaded.
   // Add childViews to this pane for views to display immediately on page
   // load.
-  mainPane: SC.MainPane.design({
+  demoContent: SC.View.design({
     childViews: ['titleCV', 'descCV', 'frameChooserCV', 'frameBodyCV'],
 
     layout: { minWidth: 320 },
 
-    // The demo title.
-    titleCV: SC.LabelView.design({
-      classNames: ['demo-title'],
-      layout: { centerX: 0, height: 30, width: 380, top: 15, zIndex: 1 },
-      localize: true,
-      value: '_DemoTitle'
-    }),
-
-    // The demo description.
-    descCV: SC.LabelView.design({
-      classNames: ['demo-desc'],
-      designAdjustments: {
-        small: { height: 160, left: 10, right: 10, top: 45 },
-        medium: { centerX: 0, height: 145, width: 380, top: 45 }
-      },
-      escapeHTML: false,
-      layout: { zIndex: 1 },
-      localize: true,
-      value: '_DemoDescription'
-    }),
-
     // The simulated size chooser button.
     frameChooserCV: SC.SegmentedView.design({
       controlSize: SC.LARGE_CONTROL_SIZE,
-      designAdjustments: {
-        small: { top: 220 },
-        medium: { top: 200 }
-      },
-      layout: { centerX: 0, height: 30, width: 400, zIndex: 2 },
+      // designAdjustments: {
+      //   small: { centerY: 100 },
+      //   medium: { centerY: 100 },
+      //   large: { centerY: 100 },
+      //   xlarge: { centerY: 100 }
+      // },
+      layout: { bottom: 50, centerX: 0, height: 30, width: 400, zIndex: 2 },
       localize: true,
       items: [{
         title: '_SmallFrameTitle',
@@ -64,14 +45,16 @@ DesignModeDemo.mainPage = SC.Page.design({
     }),
 
     // The simulated device (~1/3 a real device size).
+    // NOTE: This is not part of the "real" code, it's just for simulating a device border.
+    // You can ignore this portion and focus on frameCV below.
     frameBodyCV: SC.View.design({
       childViews: ['frameCV'],
       classNames: ['frame-body'],
       designAdjustments: {
-        'small': { height: Math.round(568/3) + 60, width: Math.round(320/3) + 20 }, // 320 x 568
-        'medium': { height: Math.round(768/3) + 60, width: Math.round(576/3) + 40 }, // 576 x 768
-        'large': { height: Math.round(768/3) + 60, width: Math.round(1024/3) + 60 }, // 1024 x 768
-        'xlarge': { height: Math.round(900/3) + 30, width: Math.round(1440/3) + 30 } // 1440 x 900
+        small: { height: Math.round(568/3) + 60, width: Math.round(320/3) + 20 }, // 320 x 568
+        medium: { height: Math.round(768/3) + 60, width: Math.round(576/3) + 30 }, // 576 x 768
+        large: { height: Math.round(768/3) + 60, width: Math.round(1024/3) + 60 }, // 1024 x 768
+        xlarge: { height: Math.round(900/3) + 30, width: Math.round(1440/3) + 30 } // 1440 x 900
       },
       layout: { border: 1, centerX: 0, centerY: 0, height: 1, width: 1 },
 
@@ -84,26 +67,30 @@ DesignModeDemo.mainPage = SC.Page.design({
       }.observes('selectedMode'),
 
       // The simulated device display (~1/3 a real device display size).
-      // This is where our app, Tiny Shapes, begins.
+      // NOTE: This is where our app, Tiny Shapes, begins.
       frameCV: SC.View.design({
         childViews: ['navbarCV', 'toolbarCV', 'sourceListCV', 'contentCV'],
         classNames: ['frame'],
+
+        // The adjusted layouts for each range.
         designAdjustments: {
-          'small': { height: Math.round(568/3), width: Math.round(320/3) },
-          'medium': { height: Math.round(768/3), width: Math.round(576/3) },
-          'large': { height: Math.round(768/3), width: Math.round(1024/3) },
-          'xlarge': { height: Math.round(900/3), width: Math.round(1440/3) }
+          small: { height: Math.round(568/3), width: Math.round(320/3) },
+          medium: { height: Math.round(768/3), width: Math.round(576/3) },
+          large: { height: Math.round(768/3), width: Math.round(1024/3) },
+          xlarge: { height: Math.round(900/3), width: Math.round(1440/3) }
         },
+
+        // The default layout.
         layout: { border: 1, centerX: 0, centerY: 0, height: 1, width: 1 },
 
         navbarCV: SC.View.design({
           childViews: ['titleCV', 'toolbarButtonCV'],
           classNames: ['navbar'],
           designAdjustments: {
-            'small': { height: 18 },
-            'medium': { height: 18 },
-            'large': { height: 22 },
-            'xlarge': { height: 22 }
+            small: { height: 18 },
+            medium: { height: 18 },
+            large: { height: 22 },
+            xlarge: { height: 22 }
           },
           layout: { height: 1, zIndex: 2 },
 
@@ -132,8 +119,8 @@ DesignModeDemo.mainPage = SC.Page.design({
         toolbarCV: SC.SegmentedView.design({
           classNames: ['toolbar'],
           designAdjustments: {
-            'small': { height: 24 },
-            'large': { top: 22, width: 80 }
+            small: { height: 24 },
+            large: { top: 22, width: 80 }
           },
 
           isVisible: function() {
@@ -153,10 +140,10 @@ DesignModeDemo.mainPage = SC.Page.design({
         sourceListCV: SC.ListView.design({
           content: DesignModeDemo.tinyAppController.get('shapes'),
           designAdjustments: {
-            'small': { width: 1 },
-            'medium': { width: 1 },
-            'large': { width: 80 },
-            'xlarge': { width: 100 }
+            small: { width: 1 },
+            medium: { width: 1 },
+            large: { width: 80 },
+            xlarge: { width: 100 }
           },
           exampleView: SC.ListItemView.extend({
             contentIconKey: 'blackIcon',
@@ -181,10 +168,10 @@ DesignModeDemo.mainPage = SC.Page.design({
         contentCV: SC.ContainerView.design({
           classNames: ['content'],
           designAdjustments: {
-            'small': { bottom: 20, top: 17 },
-            'medium': { top: 15 },
-            'large': { top: 21, left: 80 },
-            'xlarge': { top: 21, left: 100 }
+            small: { bottom: 20, top: 17 },
+            medium: { top: 15 },
+            large: { top: 21, left: 80 },
+            xlarge: { top: 21, left: 100 }
           },
           nowShowingBinding: SC.Binding.oneWay('DesignModeDemo.tinyAppController.selectedShape')
         })
