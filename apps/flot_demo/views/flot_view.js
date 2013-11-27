@@ -4,7 +4,10 @@
 // ==========================================================================
 /*globals FlotDemo, jQuery */
 
-// This page describes the main user interface for your application.
+
+/** @class
+  A simple Flot integration view.
+*/
 FlotDemo.FlotView = SC.View.extend({
 
 
@@ -27,6 +30,9 @@ FlotDemo.FlotView = SC.View.extend({
   /** @private */
   _plot: null,
 
+  /**
+    SC.View callback
+  */
   // After the layer (i.e. element) is appended, create the plot instance.
   // If you attempt to call plot earlier, it tries to walk the DOM to find
   // some color information and will hang because the layer isn't in the DOM
@@ -85,7 +91,7 @@ FlotDemo.FlotView = SC.View.extend({
     var data = this.get('data'),
       plot = this._plot;
 
-
+    // TODO: Clean up removed members.
     if (this.isSeries(data)) {
       for (var i = 0, len = data.get('length'); i < len; i++) {
         var series = data.objectAt(i);
@@ -105,7 +111,7 @@ FlotDemo.FlotView = SC.View.extend({
     }
   },
 
-  /** @private Determine if the data is a series or not. */
+  /** @private Determine if the data is a series or not. Series require deeper observing. */
   isSeries: function (data) {
     return data && data[0] && data[0].data;
   }

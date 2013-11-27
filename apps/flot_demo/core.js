@@ -72,10 +72,7 @@ FlotDemo = SC.Application.create(
   },
 
   init: function () {
-    // Use invokeLater() because it is RunLoop aware and will cause bindings to flush.
-    // this.invokeLater({
-    //   this.generateRandomPoint();
-    // }, 1000);
+    // Use SC.Timer because it is RunLoop aware and will cause bindings to flush.
     SC.Timer.schedule({
       target: this,
       action: 'generateRandomPoint',
