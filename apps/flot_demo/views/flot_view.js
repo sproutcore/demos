@@ -7,6 +7,32 @@
 
 /** @class
   A simple Flot integration view.
+
+  This makes it easier to work with Flot graphs in SproutCore. While you could
+  manage Flot independent from SproutCore, if you want to bind your data and
+  controls to the graph you need to add a thin wrapper to the standard Flot
+  API.
+
+  For example, Flot needs a target element in the DOM to work, so we use
+  SC.View's didAppendToDocument callback to set up Flot and the
+  willRemoveFromDocument callback to tear it down again. This ensures that
+  our view can be appended and removed like any other SproutCore view.
+
+  Note:
+
+  This could be greatly optimized to only observe the parts of the data that
+  change. In fact, it's probably best to only observe the data array object
+  alone and simply replace it wholly each time that the data changes. This
+  depends on how you plan to manipulate the data bound to the view.
+
+  As it stands, this demo version observes the data array object, the members
+  of the data array object (i.e. series) and the individual series data members.
+
+  This means you can update the graph by setting the data array object, adding
+  or removing a series from the data array or adding or removing a point from
+  each series' data arrays. It does *not* observe changes to each series data
+  array objects (i.e. you can't replace a series data object, you can only
+  change the members in it).
 */
 FlotDemo.FlotView = SC.View.extend({
 
@@ -67,11 +93,11 @@ FlotDemo.FlotView = SC.View.extend({
     this._plot = null;
   },
 
-
   /** @private */
   dataDidChange: function () {
     var data = this.get('data'),
-      oldData = this._oldData;
+      oldData = this._oldData,
+      plot = this._plot;
 
     // Clean up use of the old data array.
     if (oldData) {
@@ -118,7 +144,12 @@ FlotDemo.FlotView = SC.View.extend({
     // Update the plot if it exists.
     if (plot) {
       plot.setData(data);
+
+      // We need to set up the grid each time the data changes although we
+      // may be able to remove this step depending on how the data is
+      // manipulated.
       plot.setupGrid();
+
       plot.draw();
     }
   },

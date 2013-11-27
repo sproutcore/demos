@@ -16,67 +16,106 @@ FlotDemo = SC.Application.create(
   NAMESPACE: 'FlotDemo',
   VERSION: '0.1.0',
 
+  // This is our sample data.
   currentData: [{
-    "label": "Europe (EU27)",
-    "data": [[1999, 3.0], [2000, 3.9], [2001, 2.0], [2002, 1.2], [2003, 1.3], [2004, 2.5], [2005, 2.0], [2006, 3.1], [2007, 2.9], [2008, 0.9]]
+    label: "A",
+    data: [],
+    color: 'rgb(0, 137, 255)',
+    lines: {
+      fill: true
+    }
   },
   {
-    "label": "Japan",
-    "data": [[1999, -0.1], [2000, 2.9], [2001, 0.2], [2002, 0.3], [2003, 1.4], [2004, 2.7], [2005, 1.9], [2006, 2.0], [2007, 2.3], [2008, -0.7]]
-  },
-  {
-    "label": "USA",
-    "data": [[1999, 4.4], [2000, 3.7], [2001, 0.8], [2002, 1.6], [2003, 2.5], [2004, 3.6], [2005, 2.9], [2006, 2.8], [2007, 2.0], [2008, 1.1]]
+    label: "B",
+    data: [],
+    color: 'rgb(0, 255, 189)',
+    lines: {
+      fill: true
+    }
   }],
 
-  // For simulation purposes we generate random data every few seconds and assign to our currentData property bound to the view.
-  generateRandomPoint: function () {
+  // Adds a new random data point and shifts each point down by one.
+  addDataPoint: function () {
     var currentData = this.get('currentData'),
       lastData,
       lastPoint,
-      lastYear,
-      lastValue,
-      randomDelta;
+      newPoint;
 
-    // Europe
+    // Series 1
     lastData = currentData[0].data;
     lastPoint = lastData[lastData.length - 1];
-    lastYear = lastPoint[0];
-    lastValue = lastPoint[1];
-    randomDelta = (Math.random() * 4) - 2;
+    newPoint = this.generateRandomPoint(lastPoint);
+
     // Ensure that we use KVO methods when manipulating the data.
-    lastData.pushObject([lastYear + 1, lastValue + randomDelta]);
+    lastData.beginPropertyChanges();
+    lastData.pushObject(newPoint);
     lastData.removeAt(0);
 
-    // Japan
+    for (var i = 0, len = lastData.length; i < len; i++) {
+      lastData[i][0] = i;
+    }
+    lastData.endPropertyChanges();
+
+    // Series 2
     lastData = currentData[1].data;
     lastPoint = lastData[lastData.length - 1];
-    lastYear = lastPoint[0];
-    lastValue = lastPoint[1];
-    randomDelta = (Math.random() * 4) - 2;
+    newPoint = this.generateRandomPoint(lastPoint);
     // Ensure that we use KVO methods when manipulating the data.
-    lastData.pushObject([lastYear + 1, lastValue + randomDelta]);
+    lastData.beginPropertyChanges();
+    lastData.pushObject(newPoint);
     lastData.removeAt(0);
 
-    // USA
-    lastData = currentData[2].data;
-    lastPoint = lastData[lastData.length - 1];
-    lastYear = lastPoint[0];
-    lastValue = lastPoint[1];
-    randomDelta = (Math.random() * 4) - 2;
-    // Ensure that we use KVO methods when manipulating the data.
-    lastData.pushObject([lastYear + 1, lastValue + randomDelta]);
-    lastData.removeAt(0);
+    for (i = 0, len = lastData.length; i < len; i++) {
+      lastData[i][0] = i;
+    }
+    lastData.endPropertyChanges();
+  },
+
+  // Generates a random point near the previous point.
+  generateRandomPoint: function (lastPoint) {
+    var lastX = lastPoint[0],
+      lastY = lastPoint[1],
+      randomDelta;
+
+    // Generate a point slightly off from the previous point.
+    randomDelta = (Math.random() * 1) - 0.5;
+    lastY = lastY + randomDelta;
+
+    // Constrain the value between 0 - 10.
+    lastY = Math.max(0, Math.min(10, lastY));
+
+    return [lastX + 1, lastY];
+  },
+
+  // Generates a set of starting data.
+  generateStartingData: function () {
+    var currentData = this.get('currentData'),
+      series1 = currentData[0].data,
+      series2 = currentData[1].data,
+      newPoint1 = [0, 5],
+      newPoint2 = [0, 5];
+
+    for (var i = 0; i < 120; i++) {
+      newPoint1 = this.generateRandomPoint(newPoint1);
+      series1.pushObject(newPoint1);
+
+      newPoint2 = this.generateRandomPoint(newPoint2);
+      series2.pushObject(newPoint2);
+    }
 
     this.set('currentData', currentData);
   },
 
+  // Initialize.
   init: function () {
+    this.generateStartingData();
+
+    // For simulation purposes we generate random data every few seconds and assign to our currentData property bound to the view.
     // Use SC.Timer because it is RunLoop aware and will cause bindings to flush.
     SC.Timer.schedule({
       target: this,
-      action: 'generateRandomPoint',
-      interval: 1000,
+      action: 'addDataPoint',
+      interval: 60,
       repeats: true
     });
   }

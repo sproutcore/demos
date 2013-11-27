@@ -13,7 +13,9 @@ FlotDemo.demoPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   demoContent: SC.MainPane.design({
+    classNames: ['demo-content'],
     childViews: ['flotView'],
+    layout: { border: 1, centerX: 0, centerY: 0, width: 640, height: 440, zIndex: 1 },
 
     flotView: FlotDemo.FlotView.extend({
 
@@ -25,12 +27,15 @@ FlotDemo.demoPage = SC.Page.design({
 
       // Flot options.
       options: {
-        lines: {
-          show: true
+
+        grid: {
+          backgroundColor: {
+            colors: ['#fff', '#eee']
+          }
         },
 
-        points: {
-          show: true
+        legend: {
+          show: false
         },
 
         series: {
@@ -38,8 +43,14 @@ FlotDemo.demoPage = SC.Page.design({
         },
 
         xaxis: {
-          tickDecimals: 0,
-          tickSize: 1
+          tickFormatter: function () {
+            return '';
+          }
+        },
+
+        yaxis: {
+          min: 0,
+          max: 10.5
         }
       }
 
