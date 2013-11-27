@@ -31,7 +31,7 @@ FlotDemo.FlotView = SC.View.extend({
   _plot: null,
 
   /**
-    SC.View callback
+    SC.View callback. Used to create the Flot plot.
   */
   // After the layer (i.e. element) is appended, create the plot instance.
   // If you attempt to call plot earlier, it tries to walk the DOM to find
@@ -55,6 +55,18 @@ FlotDemo.FlotView = SC.View.extend({
     // Cache the plot object.
     this._plot = plot;
   },
+
+  /**
+    SC.View callback. Used to shutdown and remove the Flot plot.
+  */
+  willRemoveFromDocument: function () {
+    var plot = this._plot;
+
+    plot.shutdown();
+
+    this._plot = null;
+  },
+
 
   /** @private */
   dataDidChange: function () {
@@ -96,8 +108,8 @@ FlotDemo.FlotView = SC.View.extend({
       for (var i = 0, len = data.get('length'); i < len; i++) {
         var series = data.objectAt(i);
 
+        // Observe each individual new series for changes.
         if (!series.data.hasObserverFor('[]')) {
-          // Observe each individual new series for changes.
           series.data.addObserver('[]', this, this.dataMembersDidChange);
         }
       }
