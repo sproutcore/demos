@@ -54,8 +54,7 @@ BigData.peopleController = SC.ArrayController.create(SC.CollectionContent, SC.Co
     var activeQuery = this.get('activeQuery'),
       content;
 
-    // Retrieve the matching query, fetch it and set the results as the content
-    // of the controller.
+    // Retrieve the matching query, fetch it and set the results as the content of the controller.
     activeQuery = BigData.Person[activeQuery];
     content = BigData.store.find(activeQuery);
     this.set('content', content);
