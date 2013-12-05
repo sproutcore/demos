@@ -125,7 +125,7 @@ DesignModeDemo.demoPage = SC.Page.design({
           childViews: ['titleCV', 'toolbarButtonCV'],
           classNames: ['navbar'],
           modeAdjust: {
-            l: { layout: { height: 22 } }
+            l: { layout: { height: 32 } }
           },
           layout: { height: 18, zIndex: 2 },
 
@@ -190,7 +190,7 @@ DesignModeDemo.demoPage = SC.Page.design({
           // Set the default isVisible to false so it's easy to override when needed.
           isVisible: false,
 
-          layout: { top: 21, width: 80 },
+          layout: { top: 31, width: 80 },
 
           selectionBinding: SC.Binding.from('DesignModeDemo.tinyAppController.selection')
         }),
@@ -203,7 +203,7 @@ DesignModeDemo.demoPage = SC.Page.design({
             s_p: { layout: { bottom: 20, top: 17 } }, // left: 0, right: 0
             m_l: { layout: { top: 15, left: 80 } }, // right: 0, bottom: 0
             m_p: { layout: { top: 15 } }, // left: 0, right: 0, bottom: 0
-            l: { layout: { top: 21, left: 100 } } // right: 0, bottom: 0
+            l: { layout: { top: 31, left: 100 } } // right: 0, bottom: 0
           },
 
           nowShowingBinding: SC.Binding.oneWay('DesignModeDemo.tinyAppController.selectedShape')

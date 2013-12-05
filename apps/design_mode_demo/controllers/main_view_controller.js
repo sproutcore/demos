@@ -18,11 +18,16 @@ DesignModeDemo.mainViewController = SC.Object.create({
     this.set('selectedOrientation', this.get('designMode').split('_')[1]);
   }.observes('designMode'),
 
+  // We watch changes to the design mode here and update our chooser value to match.
+  // This allows a person to resize the window and see the value applied.
+  orientationObserver: function () {
+    this.set('selectedOrientation', SC.device.get('orientation') === SC.PORTRAIT_ORIENTATION ? 'p' : 'l');
+  }.observes('SC.device.orientation'),
+
   selectedSize: 's',
   selectedSizeBinding: SC.Binding.from('DesignModeDemo.designSize'),
 
   selectedOrientation: 'p',
-  selectedOrientationBinding: SC.Binding.from('DesignModeDemo.designOrientation'),
 
   selectedMode: function () {
     return this.get('selectedSize') + '_' + this.get('selectedOrientation');
