@@ -11,50 +11,86 @@ DesignModeDemo.demoPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page
   // load.
   demoContent: SC.View.design({
-    childViews: ['titleCV', 'descCV', 'frameChooserCV', 'frameBodyCV'],
+    childViews: ['sizeLabel', 'orientationLabel', 'sizeChooser', 'orientationToggle', 'frameBodyCV'],
 
     layout: { minWidth: 320 },
 
+    sizeLabel: SC.LabelView.extend({
+      classNames: ['chooser-label'],
+      layout: { bottom: 80, centerX: -135, height: 20, width: 100, zIndex: 2 },
+      localize: true,
+      value: "_DisplaySize"
+    }),
+
     // The simulated size chooser button.
-    frameChooserCV: SC.SegmentedView.design({
+    sizeChooser: SC.SegmentedView.design({
       controlSize: SC.LARGE_CONTROL_SIZE,
-      // designAdjustments: {
-      //   small: { centerY: 100 },
-      //   medium: { centerY: 100 },
-      //   large: { centerY: 100 },
-      //   xlarge: { centerY: 100 }
-      // },
-      layout: { bottom: 50, centerX: 0, height: 30, width: 400, zIndex: 2 },
+      layout: { bottom: 50, centerX: -40, height: 30, width: 400, zIndex: 2 },
       localize: true,
       items: [{
+        icon: 'phone',
         title: '_SmallFrameTitle',
-        value: 'small'
-      },{
+        value: 's',
+        width: 100
+      }, {
+        icon: 'tablet',
         title: '_MediumFrameTitle',
-        value: 'medium'
-      },{
+        value: 'm',
+        width: 100
+      }, {
+        icon: 'desktop',
         title: '_LargeFrameTitle',
-        value: 'large'
-      },{
-        title: '_XLargeFrameTitle',
-        value: 'xlarge'
+        value: 'l',
+        width: 100
       }],
+      // , {
+      //   title: '_XLargeFrameTitle',
+      //   value: 'xl'
+      // }],
+      itemIconKey: 'icon',
       itemTitleKey: 'title',
       itemValueKey: 'value',
-      valueBinding: SC.Binding.from('DesignModeDemo.mainViewController.selectedMode')
+      itemWidthKey: 'width',
+      valueBinding: SC.Binding.from('DesignModeDemo.mainViewController.selectedSize')
+    }),
+
+    orientationLabel: SC.LabelView.extend({
+      classNames: ['chooser-label'],
+      layout: { bottom: 80, centerX: 190, width: 100, height: 20, zIndex: 2 },
+      localize: true,
+      value: "_Orientation"
+    }),
+
+    orientationToggle: SC.ButtonView.extend({
+      action: 'toggleOrientation',
+      layout: { bottom: 50, centerX: 195, width: 120, height: 30, zIndex: 2 },
+      localize: true,
+      icon: function () {
+        return this.get('value') === 'l' ? 'picture' : 'picture-portrait';
+      }.property('value').cacheable(),
+
+      title: function () {
+        return this.get('value') === 'l' ? '_Landscape' : '_Portrait';
+      }.property('value').cacheable(),
+
+      controlSize: SC.HUGE_CONTROL_SIZE,
+      target: DesignModeDemo.mainViewController,
+      valueBinding: SC.Binding.from('DesignModeDemo.mainViewController.selectedOrientation')
     }),
 
     // The simulated device (~1/3 a real device size).
-    // NOTE: This is not part of the "real" code, it's just for simulating a device border.
-    // You can ignore this portion and focus on frameCV below.
+    // NOTE: This is not part of the "real" code, it's just for simulating a device.
+    // You can ignore this portion and focus on `frameCV` below.
     frameBodyCV: SC.View.design({
       childViews: ['frameCV'],
       classNames: ['frame-body'],
-      designAdjustments: {
-        small: { height: Math.round(568/3) + 60, width: Math.round(320/3) + 20 }, // 320 x 568
-        medium: { height: Math.round(768/3) + 60, width: Math.round(576/3) + 30 }, // 576 x 768
-        large: { height: Math.round(768/3) + 60, width: Math.round(1024/3) + 60 }, // 1024 x 768
-        xlarge: { height: Math.round(900/3) + 30, width: Math.round(1440/3) + 30 } // 1440 x 900
+      modeAdjust: {
+        s_p: { layout: { height: Math.round(568 / 3) + 60, width: Math.round(320 / 3) + 10 } }, // 320 x 568
+        s_l: { layout: { height: Math.round(320 / 3) + 10, width: Math.round(568 / 3) + 60 } }, // 568 x 320
+        m_l: { layout: { height: Math.round(768 / 3) + 30, width: Math.round(1024 / 3) + 60 } }, // 1024 x 768
+        m_p: { layout: { height: Math.round(1024 / 3) + 60, width: Math.round(768 / 3) + 30 } }, // 768 x 1024
+        l_l: { layout: { height: Math.round(1080 / 3) + 30, width: Math.round(1920 / 3) + 30 } }, // 1920 x 1080
+        l_p: { layout: { height: Math.round(1920 / 3) + 30, width: Math.round(1080 / 3) + 30 } } // 1080 x 1920
       },
       layout: { border: 1, centerX: 0, centerY: 0, height: 1, width: 1 },
 
@@ -73,11 +109,13 @@ DesignModeDemo.demoPage = SC.Page.design({
         classNames: ['frame'],
 
         // The adjusted layouts for each range.
-        designAdjustments: {
-          small: { height: Math.round(568/3), width: Math.round(320/3) },
-          medium: { height: Math.round(768/3), width: Math.round(576/3) },
-          large: { height: Math.round(768/3), width: Math.round(1024/3) },
-          xlarge: { height: Math.round(900/3), width: Math.round(1440/3) }
+        modeAdjust: {
+          s_p: { layout: { height: Math.round(568 / 3), width: Math.round(320 / 3) } },
+          s_l: { layout: { height: Math.round(320 / 3), width: Math.round(568 / 3) } },
+          m_l: { layout: { height: Math.round(768 / 3), width: Math.round(1024 / 3) } },
+          m_p: { layout: { height: Math.round(1024 / 3), width: Math.round(768 / 3) } },
+          l_l: { layout: { height: Math.round(1080 / 3), width: Math.round(1920 / 3) } },
+          l_p: { layout: { height: Math.round(1920 / 3), width: Math.round(1080 / 3) } }
         },
 
         // The default layout.
@@ -86,13 +124,10 @@ DesignModeDemo.demoPage = SC.Page.design({
         navbarCV: SC.View.design({
           childViews: ['titleCV', 'toolbarButtonCV'],
           classNames: ['navbar'],
-          designAdjustments: {
-            small: { height: 18 },
-            medium: { height: 18 },
-            large: { height: 22 },
-            xlarge: { height: 22 }
+          modeAdjust: {
+            l: { layout: { height: 22 } }
           },
-          layout: { height: 1, zIndex: 2 },
+          layout: { height: 18, zIndex: 2 },
 
           titleCV: SC.LabelView.design({
             classNames: ['title'],
@@ -101,13 +136,17 @@ DesignModeDemo.demoPage = SC.Page.design({
             value: '_TinyShapes'
           }),
 
-          /** This view is only used in 'medium' */
+          /** This view is only used in 'm' */
           toolbarButtonCV: SC.ButtonView.design({
             action: 'showMenu',
             classNames: ['toolbar-button'],
-            isVisible: function() {
-              return this.get('designMode') === 'medium';
-            }.property('designMode').cacheable(),
+
+            modeAdjust: {
+              s_l: { isVisible: true },
+              m_p: { isVisible: true }
+            },
+
+            isVisible: false,
             layout: { border: 1, centerY: 0, height: 13, left: 5, width: 40 },
             localize: true,
             target: DesignModeDemo.tinyAppController,
@@ -115,64 +154,58 @@ DesignModeDemo.demoPage = SC.Page.design({
           })
         }),
 
-        /** This view is only used in 'small' */
+        /** This view is only used in 'small portrait' */
         toolbarCV: SC.SegmentedView.design({
           classNames: ['toolbar'],
-          designAdjustments: {
-            small: { height: 24 },
-            large: { top: 22, width: 80 }
+
+          modeAdjust: {
+            s_p: { isVisible: true }
           },
 
-          isVisible: function() {
-            return this.get('designMode') === 'small';
-          }.property('designMode').cacheable(),
-
+          isVisible: false,
           items: DesignModeDemo.tinyAppController.get('shapes'),
           itemIconKey: 'icon',
           itemValueKey: 'value',
           itemWidthKey: 'width',
-          layout: { bottom: 0, zIndex: 1 },
+          layout: { bottom: 0, height: 24, zIndex: 1 },
           shouldHandleOverflow: false,
           valueBinding: SC.Binding.from('DesignModeDemo.tinyAppController.selectedShape')
         }),
 
-        /** This view is only used in 'large' & 'xlarge' */
+        /** This view is only used in 'medium landscape' & 'large' */
         sourceListCV: SC.ListView.design({
           content: DesignModeDemo.tinyAppController.get('shapes'),
-          designAdjustments: {
-            small: { width: 1 },
-            medium: { width: 1 },
-            large: { width: 80 },
-            xlarge: { width: 100 }
+
+          modeAdjust: {
+            m_l: { isVisible: true, rowHeight: 24, layout: { top: 17 } },
+            l: { isVisible: true, rowHeight: 32, layout: { width: 100 } }
           },
+
           exampleView: SC.ListItemView.extend({
             contentIconKey: 'blackIcon',
             contentValueKey: 'value',
             hasContentIcon: YES
           }),
 
-          isVisible: function () {
-            return this.get('designMode') === 'large' || this.get('designMode') === 'xlarge';
-          }.property('designMode').cacheable(),
+          // Set the default isVisible to false so it's easy to override when needed.
+          isVisible: false,
 
-          layout: { top: 21, width: 1 },
-
-          // Ex. different row heights for different design modes.
-          rowHeight: function () {
-            return this.get('designMode') === 'large' ? 24 : 36;
-          }.property('designMode').cacheable(),
+          layout: { top: 21, width: 80 },
 
           selectionBinding: SC.Binding.from('DesignModeDemo.tinyAppController.selection')
         }),
 
         contentCV: SC.ContainerView.design({
           classNames: ['content'],
-          designAdjustments: {
-            small: { bottom: 20, top: 17 },
-            medium: { top: 15 },
-            large: { top: 21, left: 80 },
-            xlarge: { top: 21, left: 100 }
+
+          modeAdjust: {
+            s_l: { layout: { top: 17 } }, // left: 0, right: 0 bottom: 0
+            s_p: { layout: { bottom: 20, top: 17 } }, // left: 0, right: 0
+            m_l: { layout: { top: 15, left: 80 } }, // right: 0, bottom: 0
+            m_p: { layout: { top: 15 } }, // left: 0, right: 0, bottom: 0
+            l: { layout: { top: 21, left: 100 } } // right: 0, bottom: 0
           },
+
           nowShowingBinding: SC.Binding.oneWay('DesignModeDemo.tinyAppController.selectedShape')
         })
       })
@@ -222,7 +255,7 @@ DesignModeDemo.demoPage = SC.Page.design({
     itemIconKey: 'blackIcon',
     itemValueKey: 'value',
 
-    selectedItemChanged: function() {
+    selectedItemChanged: function () {
       DesignModeDemo.tinyAppController.set('selectedShape', this.get('selectedItem').value);
     }.observes('selectedItem')
   })

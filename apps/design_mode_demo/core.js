@@ -17,12 +17,6 @@ DesignModeDemo = SC.Application.create(
 
   VERSION: '0.1.0',
 
-  // This application will adjust for four different design modes at the specified thresholds.
-  designModes: {
-    'small': 400,
-    'medium': 768,
-    'large': 1024,
-    'xlarge': Infinity
-  }
+  designMode: 's_p'
 
 });

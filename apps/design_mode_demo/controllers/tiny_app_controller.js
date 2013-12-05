@@ -8,6 +8,8 @@
 
 DesignModeDemo.tinyAppController = SC.Object.create(SC.SelectionSupport, {
 
+  allowsEmptySelection: false,
+
   selectedShape: 'circle',
 
   selection: null,
@@ -17,22 +19,29 @@ DesignModeDemo.tinyAppController = SC.Object.create(SC.SelectionSupport, {
     icon: 'circle-icon',
     value: 'circle',
     width: 25
-  },{
+  }, {
     blackIcon: 'black-square-icon',
     icon: 'square-icon',
     value: 'square',
     width: 25
-  },{
+  }, {
     blackIcon: 'black-triangle-icon',
     icon: 'triangle-icon',
     value: 'triangle',
     width: 25
-  },{
+  }, {
     blackIcon: 'black-diamond-icon',
     icon: 'diamond-icon',
     value: 'diamond',
     width: 25
   }],
+
+  init: function () {
+    sc_super();
+
+    // Initialize the selection.
+    this.selectObject(this.get('shapes').findProperty('value', this.get('selectedShape')));
+  },
 
   /** Transform the selection change over to the selected value. */
   selectionDidChange: function () {
@@ -60,7 +69,7 @@ DesignModeDemo.tinyAppController = SC.Object.create(SC.SelectionSupport, {
     }
   }.observes('selectedShape'),
 
-  showMenu: function(sender) {
+  showMenu: function (sender) {
     DesignModeDemo.demoPage.get('menuPicker').popup(sender);
   }
 
