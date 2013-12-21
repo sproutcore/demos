@@ -61,7 +61,10 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
         offset;
 
       offset = evt.clientY - this._initialY;
-      height = Math.max(75, this._initialHeight + offset);
+      // Parent view is centered, so we double the offset to keep the dragger under the mouse (for aesthetic purposes - the view would
+      // continue to get the events even if the mouse is no longer over it, as RootResponder routes subsequent mouse events to the view
+      // which handled mouseDown).
+      height = Math.max(75, this._initialHeight + (offset * 2));
       parentView.adjust('height', height);
     },
 
