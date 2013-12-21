@@ -1,0 +1,71 @@
+// Add your custom CSS styles here.
+//
+// You may want to create additional stylesheet files for every page or pane
+// within your application rather than placing all your CSS in here.  In any
+// case, all stylesheet files will be combined into a single stylesheet on
+// build to let it load super fast.
+//
+// Remember, Compass (http://compass-style.org) is built in and you can use
+// SCSS syntax (http://sass-lang.com/) even though stylesheet files should end
+// with the .css extension.
+//
+// Learn more on styling your app here: http://sproutcore.com/guides/chance.html
+
+body {
+	min-height: 500px;
+	min-width: 600px;
+}
+
+$theme.drag-drop-instructions {
+	text-align: center;
+	font-size: 1.1em;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 4px;
+}
+
+$theme.drop-target {
+	border: 2px dashed black;
+	border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.4);
+
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+
+	&.can-drop {
+		border: 2px dashed black;
+		background-color: rgba(50, 150, 50, 0.5);
+	}
+	&.has-matching-hover {
+		border: 2px dashed green;
+		background-color: rgba(50, 255, 50, 0.6);
+	}
+	&.has-nonmatching-hover {
+		border: 2px dashed darkred;
+		background-color: rgba(255, 50, 50, 0.6);
+		color: white;
+		text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+	}
+
+	$theme.drop-target-label-wrapper {
+		display: table;
+		height: 100%;
+		width: 100%;
+	}
+
+	$theme.drop-target-label {
+		width: 100%;
+		padding: 15px;
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		font-size: 1.2em;	
+	}
+
+	$theme.drop-target-image {
+		height: 100%;
+		width: 100%;
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+}
