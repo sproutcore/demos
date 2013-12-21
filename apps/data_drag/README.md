@@ -19,4 +19,4 @@ and `dataDragDropped` to actually handle said drop. (Note the specific operation
 performed on events, especially in DropTargetView's `dataDragHovered` and
 `dataDragDropped` handlers.)
 
-For more, see the Events chapter in [SC.View'sdocumentation](http://docs.sproutcore.com/?#doc=SC.View&src=false).
+For more, see the Events chapter in [SC.View's documentation](http://docs.sproutcore.com/?#doc=SC.View&src=false).
