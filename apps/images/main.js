@@ -15,7 +15,7 @@ Images.main = function main() {
 
   // Configure the shared demo page.
   CommonAssets.set('sourceURL', 'https://github.com/sproutcore/demos/tree/master/apps/images');
-  CommonAssets.set('demoContent', 'Images.mainPage.demoContent');
+  CommonAssets.set('demoContent', 'Images.demoPage.demoContent');
 
   // Append the main demo pane.
   CommonAssets.mainPage.get('mainPane').append();

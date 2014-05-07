@@ -5,7 +5,7 @@
 /*global Images */
 
 // This page describes the main user interface for your application.
-Images.mainPage = SC.Page.create({
+Images.demoPage = SC.Page.create({
 
   demoContent: SC.View.extend({
     childViews: ['scaleShadowImage', 'normalImage', 'sourceTitle', 'destTitle', 'arrowView', 'scaleImage', 'controlView', 'scaleButton', 'topLeftButton', 'topButton', 'topRightButton', 'leftButton', 'centerButton', 'rightButton', 'bottomLeftButton', 'bottomButton', 'bottomRightButton'],
