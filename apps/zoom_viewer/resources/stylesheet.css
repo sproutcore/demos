@@ -1,0 +1,72 @@
+@import "compass/css3";
+
+// Add your custom CSS styles here.
+//
+// You may want to create additional stylesheet files for every page or pane
+// within your application rather than placing all your CSS in here.  In any
+// case, all stylesheet files will be combined into a single stylesheet on
+// build to let it load super fast.
+//
+// Remember, Compass (http://compass-style.org) is built in and you can use
+// SCSS syntax (http://sass-lang.com/) even though stylesheet files should end
+// with the .css extension.
+//
+// Learn more on styling your app here: http://sproutcore.com/guides/chance.html
+
+$theme.header {
+  background-color: #e8e8e8;
+  border-color: #c9c9c9;
+
+  .header-label {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+$theme.thumb-list {
+  background-color: #f3f3f3;
+}
+
+$theme.sc-collection-item {
+  &.thumb-item-view {
+
+    &.sel {
+      background: none;
+
+      .thumb-item-backing {
+        display: block;
+      }
+
+      .thumb-item-title {
+        color: #333;
+      }
+    }
+
+    .thumb-item-backing {
+      @include border-radius(10px);
+      background-color: #cacaca;
+      bottom: 32px;
+      display: none;
+      left: 12px;
+      position: absolute;
+      right: 12px;
+      top: 7px;
+    }
+
+    .thumb-item-title {
+      bottom: 10px;
+      color: #333;
+      height: 20px;
+      left: 0px;
+      line-height: 20px;
+      position: absolute;
+      right: 0px;
+      text-align: center;
+    }
+  }
+}
+
+
+$theme.detail-view {
+  background-color: #6b6b6c;
+}
