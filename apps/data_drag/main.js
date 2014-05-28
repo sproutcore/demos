@@ -14,7 +14,7 @@
 DataDrag.main = function main() {
 
   // Configure the shared demo page.
-  CommonAssets.set('sourceURL', 'https://github.com/sproutcore/demos/tree/team/dcporter/drag-drop/apps/data_drag');
+  CommonAssets.set('sourceURL', 'https://github.com/sproutcore/demos/tree/master/apps/data_drag');
   CommonAssets.set('demoContent', 'DataDrag.demoPage.demoContent');
 
   // Append the main demo pane.
