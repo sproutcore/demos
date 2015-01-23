@@ -1,0 +1,14 @@
+.loading-text {
+  color: #C1C1C1;
+  font-family: Futura, Impact, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 32px;
+  height: 50px;
+  left: 50%;
+  line-height: 50px;
+  margin-left: (-300px / 2);
+  margin-top: (-50px / 2 + 150);
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 300px;
+}

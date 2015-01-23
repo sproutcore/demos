@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   Gestures - mainPage
+// Project:   Gestures
 // Copyright: @2015 7x7 Software, Inc.
 // ==========================================================================
 /*globals Gestures */
@@ -7,7 +7,7 @@ Gestures.ICON_SIZE = 200;
 
 /** @class */
 Gestures.SpriteView = SC.View.extend({
-  SC_LOG_VIEW_STATE: true,
+  // SC_LOG_VIEW_STATE: true,
 
   // When value changes, the view will re-render.
   displayProperties: ['value'],

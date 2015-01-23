@@ -1,0 +1,25 @@
+{
+  "/sproutcore/desktop": [
+    "panes/alert.js",
+    "views/checkbox.js",
+    "views/date_field.js",
+    "views/disclosure.js",
+    "views/image_button.js",
+    "views/link_view.js",
+    "views/master_detail.js",
+    "views/navigation.js",
+    "views/navigation_bar.js",
+    "views/popup_button.js",
+    "views/select.js",
+    "views/source_list.js",
+    "views/source_list_group.js",
+    "views/toolbar.js",
+    "views/workspace.js"
+  ],
+  "/sproutcore/foundation": [
+    "validators/date_time.js",
+    "views/field.js",
+    "views/inline_text_field.js",
+    "views/text_field.js"
+  ]
+}

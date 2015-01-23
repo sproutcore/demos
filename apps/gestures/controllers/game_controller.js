@@ -49,8 +49,8 @@ Gestures.gameController = SC.Object.create({
     return ret;
   }.property('level').cacheable(),
 
-  // Whether the sound should play or not.
-  isMuted: true,
+  // Whether the music should play or not.
+  isMuted: false,
 
   // Whether the game is paused or not while running.
   isPaused: false,
@@ -69,17 +69,6 @@ Gestures.gameController = SC.Object.create({
 
   // The current score.
   score: 0,
-
-  /** @private Returns a random gesture from the pool. */
-  _g_randomGesture: function () {
-    var gesturePool = this.get('gesturePool'),
-      index;
-
-    // Get a random index into the gesture pool
-    index = Math.round(Math.random() * 10) % gesturePool.get('length');
-
-    return gesturePool.objectAt(index);
-  },
 
   /** @private Formats a number to a string with ','s. */
   _g_numberToFormatted: function (number) {
@@ -100,69 +89,31 @@ Gestures.gameController = SC.Object.create({
     return ret;
   },
 
-  // Start the game. Sets isRunning to true and sets expectedGesture to a random gesture.
-  start: function () {
-    this._g_lastMatchedAt = Date.now();
+  /** @private Returns a random gesture from the pool. */
+  _g_randomGesture: function () {
+    var gesturePool = this.get('gesturePool'),
+      index;
 
-    var nextGesture = this._g_randomGesture();
-    this.set('expectedGesture', nextGesture);
+    // Get a random index into the gesture pool
+    index = Math.round(Math.random() * 10) % gesturePool.get('length');
 
-    // Start the clock.
-    this.invokeLater('tick', 100);
-    this._g_startedAt = Date.now();
-
-    // Set the level and running flag.
-    this.set('level', 1);
-    this.set('isRunning', true);
+    return gesturePool.objectAt(index);
   },
 
-  startWithMouse: function (sender) {
-    var mouseMessagePane = Gestures.mainPage.get('mouseMessagePane');
-
-    mouseMessagePane.remove();
-    this.start();
-  },
-
-  // Stop the game.
-  stop: function () {
-    this.set('level', 0);
-    this.set('isRunning', false);
-
-    // Clean up.
-    this.set('expectedGesture', null);
-    this._g_lastMatchedAt = null;
-    this.set('matchCount', 0);
-  },
-
-  togglePause: function () {
-    if (this.get('isRunning')) {
-      this.toggleProperty('isPaused');
-
-      if (this.get('isPaused')) {
-        this._g_pausedAt = Date.now();
-      } else {
-        // Start running again. Adjust the start time accordingly.
-        this._g_startedAt = this._g_startedAt + (Date.now() - this._g_pausedAt);
-        this.invokeLater('tick', 100);
-        this._g_pausedAt = null;
-      }
-    }
-  },
-
-  // Update the time remaining.
-  tick: function () {
+  /** @private Update the time remaining. */
+  _g_tick: function () {
     var timeRemaining = Gestures.GAME_LENGTH - (Date.now() - this._g_startedAt);
 
     if (!this.get('isPaused')) {
       if (timeRemaining > 0) {
         this.set('timeRemaining', timeRemaining);
-        this.invokeLater('tick', 100);
+        this.invokeLater('_g_tick', 100);
       } else {
         this.set('timeRemaining', 0);
 
         if (this.get('level') < 3) {
           this.incrementProperty('level');
-          this.invokeLater('tick', 100);
+          this.invokeLater('_g_tick', 100);
           this._g_startedAt = Date.now();
         } else {
           this.stop();
@@ -171,7 +122,204 @@ Gestures.gameController = SC.Object.create({
     }
   },
 
-  // Call when a match is made. Does nothing if isRunning is false.
+  /**
+    Enter the game lobby.
+  */
+  enterGame: function () {
+    // Remove the splash pane.
+    var splashMainPane = Gestures.splashPage.get('mainPane');
+    splashMainPane.remove();
+
+    // Append the lobby pane.
+    var lobbyMainPane = Gestures.lobbyPage.get('mainPane');
+    lobbyMainPane.append();
+
+    // Start the lobby music.
+    var audioPane = Gestures.accessoriesPage.get('audioPane'),
+        musicToggle = audioPane.get('musicToggle'),
+        lobbyAudio = audioPane.get('lobbyAudio');
+
+    // Mobile Safari will not allow autoplay. All calls to play must be done through direct user
+    // interaction.
+    lobbyAudio.play();
+    musicToggle.set('isVisible', true);
+  },
+
+  /**
+    Start the game via a mouse-click.
+  */
+  enterGameWithMouse: function (sender) {
+    var mouseMessagePane = Gestures.accessoriesPage.get('mouseMessagePane');
+
+    mouseMessagePane.remove();
+    this.enterGame();
+  },
+
+  exitGame: function () {
+    // Append the lobby pane.
+    var lobbyMainPane = Gestures.lobbyPage.get('mainPane');
+    lobbyMainPane.append();
+
+    // Remove the game pane.
+    var gameMainPane = Gestures.gamePage.get('mainPane');
+    gameMainPane.remove();
+
+    // Remove the thanks pane.
+    var gameEndPane = Gestures.accessoriesPage.get('gameEndPane');
+    gameEndPane.remove();
+
+    this.set('score', 0);
+  },
+
+  /**
+    Start the game. Sets isRunning to true and sets expectedGesture to a random gesture.
+  */
+  start: function () {
+    // Remove the lobby pane.
+    var lobbyMainPane = Gestures.lobbyPage.get('mainPane');
+    lobbyMainPane.remove();
+
+    // Append the game pane.
+    var gameMainPane = Gestures.gamePage.get('mainPane');
+    gameMainPane.append();
+
+    // Toggle the playing song, but only if not muted.
+    if (!this.get('isMuted')) {
+      var audioPane = Gestures.accessoriesPage.get('audioPane'),
+          lobbyAudio,
+          gameAudio;
+
+      // Mobile Safari will not allow autoplay. All calls to play must be done through direct user
+      // interaction.
+      lobbyAudio = audioPane.get('lobbyAudio');
+      gameAudio = audioPane.get('gameAudio');
+      lobbyAudio.stop();
+      gameAudio.play();
+    }
+
+    this._g_lastMatchedAt = Date.now();
+
+    var nextGesture = this._g_randomGesture();
+    this.set('expectedGesture', nextGesture);
+
+    // Start the clock.
+    this.invokeLater('_g_tick', 100);
+    this._g_startedAt = Date.now();
+
+    // Set the level and running flag.
+    this.set('score', 0);
+    this.set('level', 1);
+    this.set('isRunning', true);
+  },
+
+  /**
+    Stop the game.
+  */
+  stop: function () {
+    // Toggle the playing song, but only if not already muted.
+    if (!this.get('isMuted')) {
+      var audioPane = Gestures.accessoriesPage.get('audioPane'),
+          lobbyAudio,
+          gameAudio;
+
+      // Mobile Safari will not allow autoplay. All calls to play must be done through direct user
+      // interaction.
+      lobbyAudio = audioPane.get('lobbyAudio');
+      gameAudio = audioPane.get('gameAudio');
+      gameAudio.stop();
+      lobbyAudio.play();
+    }
+
+    // Append the thanks pane.
+    var gameEndPane = Gestures.accessoriesPage.get('gameEndPane');
+    gameEndPane.append();
+
+    // Clean up.
+    this.set('level', 0);
+    this.set('isRunning', false);
+    this.set('expectedGesture', null);
+    this._g_lastMatchedAt = null;
+    this.set('matchCount', 0);
+  },
+
+  /**
+    Toggle music playback.
+
+    Note: In an earlier version of this demo, this acted as a mute and the music kept playing.
+    However, mobile Safari doesn't allow you to adjust the volume of <audio> elements, so we have
+    to just stop the music.
+  */
+  toggleMusic: function () {
+    var audioPane = Gestures.accessoriesPage.get('audioPane'),
+        lobbyAudio,
+        gameAudio;
+
+    this.toggleProperty('isMuted');
+
+    // Mobile Safari will not allow autoplay. All calls to play must be done through direct user
+    // interaction.
+    lobbyAudio = audioPane.get('lobbyAudio');
+    gameAudio = audioPane.get('gameAudio');
+
+    if (this.get('isMuted')) {
+      if (this.get('isRunning')) {
+        gameAudio.stop();
+      } else {
+        lobbyAudio.stop();
+      }
+    } else {
+      if (this.get('isRunning') && !this.get('isPaused')) {
+        gameAudio.play();
+      } else {
+        lobbyAudio.play();
+      }
+    }
+  },
+
+  /**
+    Pause/unpause the game.
+
+  */
+  togglePause: function () {
+    if (this.get('isRunning')) {
+      this.toggleProperty('isPaused');
+
+      var isPaused = this.get('isPaused');
+
+      // Toggle the playing song, but only if not already muted.
+      if (!this.get('isMuted')) {
+        var audioPane = Gestures.accessoriesPage.get('audioPane'),
+            lobbyAudio,
+            gameAudio;
+
+        // Mobile Safari will not allow autoplay. All calls to play must be done through direct user
+        // interaction.
+        lobbyAudio = audioPane.get('lobbyAudio');
+        gameAudio = audioPane.get('gameAudio');
+
+        if (this.get('isPaused')) {
+          gameAudio.stop();
+          lobbyAudio.play();
+        } else {
+          gameAudio.play();
+          lobbyAudio.stop();
+        }
+      }
+
+      if (isPaused) {
+        this._g_pausedAt = Date.now();
+      } else {
+        // Start running again. Adjust the start time accordingly.
+        this._g_startedAt = this._g_startedAt + (Date.now() - this._g_pausedAt);
+        this.invokeLater('_g_tick', 100);
+        this._g_pausedAt = null;
+      }
+    }
+  },
+
+  /**
+    The gesture target calls this each time a match is made. Does nothing if isRunning is false.
+  */
   matched: function () {
     if (this.get('isRunning')) {
       // Increment the number of points.

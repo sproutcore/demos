@@ -1,0 +1,82 @@
+// Generic Defaults
+
+h1, h2, h3, p {
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 100;
+  line-height: 34px; // Warning! SC.AutoResize will use the computed line-height of unstyled text, so specify it.
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 21px; // Warning! SC.AutoResize will use the computed line-height of unstyled text, so specify it.
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 17px; // Warning! SC.AutoResize will use the computed line-height of unstyled text, so specify it.
+}
+
+p {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 16px; // Warning! SC.AutoResize will use the computed line-height of unstyled text, so specify it.
+}
+
+// SproutCore Overrides
+
+$theme.sc-main {
+  background: white;
+}
+
+$theme.sc-pane.sc-panel {
+  > .sc-view {
+    background-color: white;
+    border-radius: 8px;
+  }
+
+  .panel-background {
+    display: none;
+  }
+}
+
+// Generic Classes
+
+$theme.big-green-button {
+  @include border-radius(8px);
+  background-color: #17C930;
+
+  .sc-button-label {
+    color: white;
+    font-size: 30px;
+    font-family: Helvetica Neue, Helvetica, sans-serif;
+    font-weight: 100;
+    line-height: 60px;
+  }
+
+}
+
+
+$theme.pane-message {
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+  text-align: center;
+
+  .pane-message-title {
+    font-size: 24px;
+    line-height: 38px;
+  }
+}
+
+$theme.pane-button {
+  .left, .middle, .right { display: none; }
+  .sc-button-label {
+    color: #22C6DA;
+    font-size: 28px;
+    line-height: 40px;
+  }
+}

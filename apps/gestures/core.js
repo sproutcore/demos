@@ -16,8 +16,8 @@ Gestures = SC.Application.create(
   NAMESPACE: 'Gestures',
   VERSION: '0.1.0',
 
-  // Levels last 35 seconds.
-  GAME_LENGTH: 35 * 1000,
+  // Levels last 21 seconds.
+  GAME_LENGTH: 21 * 1000,
 
   // A custom in transition plugin. Scales, twists and fades in the view.
   TWIST_DROP: {
@@ -29,7 +29,7 @@ Gestures = SC.Application.create(
       view.adjust({
         opacity: 0,
         rotateZ: 25,
-        scale: 3
+        scale: 6
       });
     },
 
@@ -61,10 +61,10 @@ Gestures = SC.Application.create(
     run: function (view, options) {
       view.animate({
         opacity: 0,
-        scale: 0.25
+        scale: 0.2
       }, {
         delay: options.delay || 0,
-        duration: options.duration || 0.4,
+        duration: options.duration || 0.8,
         timing: options.timing || 'ease'
       }, function (data) {
         if (!data.isCancelled) {

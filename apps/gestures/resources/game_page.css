@@ -1,33 +1,4 @@
-// Add your custom CSS styles here.
-//
-// You may want to create additional stylesheet files for every page or pane
-// within your application rather than placing all your CSS in here.  In any
-// case, all stylesheet files will be combined into a single stylesheet on
-// build to let it load super fast.
-//
-// Remember, Compass (http://compass-style.org) is built in and you can use
-// SCSS syntax (http://sass-lang.com/) even though stylesheet files should end
-// with the .css extension.
-//
-// Learn more on styling your app here: http://sproutcore.com/guides/chance.html
 @import "compass/css3/animation";
-
-// SproutCore Overrides
-
-$theme.sc-main {
-  background: white;
-}
-
-$theme.sc-pane.sc-panel {
-  > .sc-view {
-    background-color: white;
-    border-radius: 8px;
-  }
-
-  .panel-background {
-    display: none;
-  }
-}
 
 // IDs
 
@@ -42,16 +13,20 @@ $theme.sc-pane.sc-panel {
 }
 
 #music-button {
-  @include slice('images/music.png');
+  @include slice('./images/music.png');
   font-family: Futura, Impact, Helvetica Neue, Helvetica, sans-serif;
+
+  &.is-muted {
+    opacity: 0.3;
+  }
 }
 
 #pause-toggle {
-  @include slice('images/pause.png');
+  @include slice('./images/pause.png');
   .left, .middle, .right { display: none; }
 
   &.is-paused {
-    @include slice('images/play.png');
+    @include slice('./images/play.png');
   }
 }
 
@@ -66,19 +41,19 @@ $theme.sc-pane.sc-panel {
     bottom: 0;
 
     &.level-1 {
-      @include animation(flash_slow 4s linear 0s infinite alternate);
+      @include animation(flash 4s linear 0s infinite alternate);
     }
 
     &.level-2 {
-      @include animation(flash_slow 3s linear 0s infinite alternate);
+      @include animation(flash 3s linear 0s infinite alternate);
     }
 
     &.level-3 {
-      @include animation(flash_slow 2s linear 0s infinite alternate);
+      @include animation(flash 2s linear 0s infinite alternate);
     }
 
     &.level-3-urgent {
-      @include animation(flash_slow 0.5s linear 0s infinite alternate);
+      @include animation(flash 0.5s linear 0s infinite alternate);
     }
   }
 
@@ -100,23 +75,6 @@ $theme.sc-pane.sc-panel {
 }
 
 // Classes
-
-$theme.pane-message {
-  text-align: center;
-
-  .pane-message-title {
-    font-size: 24px;
-    line-height: 38px;
-  }
-}
-
-$theme.pane-button {
-  .left, .middle, .right { display: none; }
-  .sc-button-label {
-    color: #22C6DA;
-    font-size: 28px;
-  }
-}
 
 $theme.points-label {
   color: #b7aeda;
@@ -147,7 +105,7 @@ $theme.start-label {
   }
 }
 
-@include keyframes(flash_slow) {
+@include keyframes(flash) {
   0% { opacity: 1; }
   50% { opacity: 0.5; }
   100% { opacity: 1; }

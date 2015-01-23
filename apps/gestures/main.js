@@ -13,19 +13,26 @@
 //
 Gestures.main = function main() {
 
-  // Step 1: Instantiate Your Views
-  // The default code here will make the mainPane for your application visible
-  // on screen.  If you app gets any level of complexity, you will probably
-  // create multiple pages and panes.
-  Gestures.getPath('mainPage.mainPane').append();
+  // This is a very simple app consisting of a single pane with a lot of views in it. Typically,
+  // we'd be better suited to split the views across multiple pages (SC pages are just containers
+  // used to house our configured views) and we'd use an application statechart (see SC.Statechart)
+  // to handle the complexity of the application state.
+  var splashMainPane = Gestures.splashPage.get('mainPane');
+  splashMainPane.append();
 
-  // Step 2. Set the content property on your primary controller.
-  // This will make your app come alive!
-  //
-  // ex.
-  // var content = Gestures.store.find(Gestures.Group);
-  // Gestures.groupsController.set('content', content);
-  // SC.platform.simulateTouchEvents();
+  // Append a non-visible pane to hold our audio tags for the entirety of the session.
+  var audioPane = Gestures.accessoriesPage.get('audioPane');
+  audioPane.append();
+
+  // Set the initial volume of the Audio elements. Has no effect on Mobile Safari.
+  audioPane.setPath('lobbyAudio.volume', 0.5);
+  audioPane.setPath('gameAudio.volume', 0.8);
+
+
+    // Append the thanks pane.
+    // var gameEndPane = Gestures.accessoriesPage.get('gameEndPane');
+    // gameEndPane.append();
+
 };
 
 

@@ -1,0 +1,5 @@
+$theme.score-label {
+  &.pane-score {
+    text-align: center;
+  }
+}

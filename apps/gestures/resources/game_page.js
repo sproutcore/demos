@@ -1,97 +1,21 @@
 // ==========================================================================
-// Project:   Gestures - mainPage
+// Project:   Gestures
 // Copyright: @2015 7x7 Software, Inc.
 // ==========================================================================
 /*globals Gestures */
 
 
-// This page describes the main user interface for your application.
-Gestures.mainPage = SC.Page.design({
+// This page houses the main pane for the game.
+Gestures.gamePage = SC.Page.design({
 
-  // The main pane is made visible on screen as soon as your app is loaded.
-  // Add childViews to this pane for views to display immediately on page
-  // load.
+  // A main pane fills the entire screen. Only one may be used at a time.
   mainPane: SC.MainPane.design({
     // The child views of the pane. Note that the gesture targets are last (i.e. rendered on top of the drop zone).
-    childViews: ['currentGesture', 'lastPointsLabel', 'totalScoreLabel', 'startLabel', 'gestureTarget', 'timerBar', 'musicToggle', 'pauseToggle'],
+    childViews: ['currentGestureImage', 'lastPointsLabel', 'totalScoreLabel', 'gestureTarget', 'timerBar', 'pauseToggle'],
 
-    levelLabel: SC.LabelView.design({
-      layerId: 'level-label',
-
-      layout: { bottom: 0, height: 75 },
-
-      valueBinding: SC.Binding.oneWay('Gestures.gameController.level')
-        .transform(function (level) {
-          return level ? "Level " + level : "";
-        })
-    }),
-
-    lastPointsLabel: SC.LabelView.design({
-
-      // Give our view a custom class name for styling.
-      classNames: ['points-label'],
-
-      // Bind to the last display points of the game controller.
-      displayLastPointsBinding: SC.Binding.oneWay('Gestures.gameController.displayLastPoints'),
-
-      // Start off invisible.
-      isVisible: false,
-
-      // Place the last points below the total score.
-      layout: { left: 0, top: 0, height: 100, width: 300 },
-
-      transitionHide: Gestures.FADE_RISE,
-      transitionHideOptions: { duration: 2, finalTop: 5, finalLeft: 0 },
-
-      parentViewDidResize: function () {
-        var parentFrame = this.getPath('parentView.frame'),
-            finalLeft = parentFrame.width - 415;
-
-        // Adjust the finalLeft value according to what it would be as a right value.
-        this.transitionHideOptions.finalLeft = finalLeft;
-
-        // Center the view.
-        this.adjust({
-          left: (parentFrame.width - 400) / 2,
-          top: (parentFrame.height - 100) / 2
-        });
-      },
-
-      wantsAccelerateLayer: true,
-
-      // Each time the last points change, set the label, appear and then dissappear (fades).
-      valueDidChange: function () {
-        var displayLastPoints = this.get('displayLastPoints');
-
-        if (displayLastPoints) {
-          this.set('value', displayLastPoints);
-
-          this.set('isVisible', true);
-          this.invokeNext(function () {
-            this.set('isVisible', false);
-          });
-
-          // Clear out last points each time.
-          Gestures.gameController.set('lastPoints', null);
-        }
-      }.observes('displayLastPoints')
-
-    }),
-
-    totalScoreLabel: SC.LabelView.design({
-
-      // Give our view a custom class name for styling.
-      classNames: ['score-label'],
-
-      // Place the score in the top-right.
-      layout: { right: 15, top: 5, height: 100, width: 400 },
-
-      // Bind the value of the label to the current score.
-      valueBinding: SC.Binding.oneWay('Gestures.gameController.displayScore')
-
-    }),
-
-    currentGesture: SC.View.design({
+    // This is the custom current gesture view. It manages two custom images that it cycles between the
+    // incoming gesture (transitions in) and the just matched gesture (transitions out).
+    currentGestureImage: SC.View.design({
 
       // The current image.
       _g_currentImage: null,
@@ -167,7 +91,6 @@ Gestures.mainPage = SC.Page.design({
 
       /** @private Each time a match is made, swap the gesture shown. */
       matchCountDidChange: function () {
-        console.log('matchCountDidChange()');
         var expectedGesture = Gestures.gameController.get('expectedGesture'),
             currentImage,
             lastImage;
@@ -198,41 +121,98 @@ Gestures.mainPage = SC.Page.design({
 
     }),
 
-    startLabel: SC.LabelView.design({
-      classNames: ['start-label'],
+    // Shows the most recently earned points. Uses a transitionHide plug-in to fade out while moving towards
+    // the total earned points label.
+    lastPointsLabel: SC.LabelView.design({
 
-      // Insert the value as is, because it's not user defined.
-      escapeHTML: false,
+      // Give our view a custom class name for styling.
+      classNames: ['points-label'],
 
-      layout: { centerX: 0, centerY: -25, height: 100, width: 150 },
+      // Start off invisible.
+      isVisible: false,
 
-      transitionHide: SC.View.FADE_OUT,
+      // Place the last points below the total score.
+      layout: { left: 0, top: 0, height: 100, width: 300 },
 
-      valueBinding: SC.Binding.oneWay('Gestures.gameController.score')
-          .transform(function (score) {
-            if (score === 0) {
-              return "<span class=\"start-label-to\">Tap to</span><br>Start";
-            } else {
-              return "Game Over";
-            }
-          }),
+      // We need a means of knowing when points are earned. We could observe displayLastPoints, but it's
+      // possible for the current earned points to be equal to the last earned points and so the
+      // observer wouldn't actually need to fire every time. `matchCount` changes every time a match
+      // is made though, so we can use it.
+      matchCount: 0,
+      matchCountBinding: SC.Binding.oneWay('Gestures.gameController.matchCount'),
 
-      // When isRunning property of gameController goes false, fades out.
-      isVisibleBinding: SC.Binding.oneWay('Gestures.gameController.isRunning').not()
-      // isVisibleBinding: SC.Binding.mix('Gestures.gameController.isRunning', 'Gestures.gameController.score',
-      //     function (isRunning, score) {
-      //       return !isRunning && score === 0;
-      //     })
+      transitionHide: Gestures.FADE_RISE,
+      transitionHideOptions: { duration: 2, finalTop: 5, finalLeft: 0 },
+
+      // Bind to the last display points of the game controller.
+      valueBinding: SC.Binding.oneWay('Gestures.gameController.displayLastPoints'),
+
+      // Because our layout is fixed (left, top, width & height), we can use CSS translate to move
+      // the view which can be GPU accelerated by many browsers. Request it.
+      wantsAccelerateLayer: true,
+
+      // Tricky! We want this view to use CSS translate (i.e. GPU acceleratable) positioning, which
+      // requires that the layout be based on left & top. But we also want it to be centered, so
+      // each time that the parent view resizes, we adjust the left & top to keep this view
+      // centered.
+      parentViewDidResize: function () {
+        var parentFrame = this.getPath('parentView.frame'),
+            finalLeft = parentFrame.width - 415;
+
+        // Adjust the finalLeft value according to what it would be as a right value.
+        this.transitionHideOptions.finalLeft = finalLeft;
+
+        // Center the view.
+        this.adjust({
+          left: (parentFrame.width - 400) / 2,
+          top: (parentFrame.height - 100) / 2
+        });
+      },
+
+      // Each time the matchCount changes, appear and then immediately disappear (triggers transitionHide).
+      matchCountDidChange: function () {
+        var value = this.get('value');
+
+        if (value) {
+          this.set('isVisible', true);
+
+          // Give the browser a chance to update this view before hiding it again.
+          this.invokeNext(function () {
+            this.set('isVisible', false);
+          });
+
+          // Clear out last points each time it is used. This ensures that when the value is the same
+          // (100pts to 100pts), it still triggers a change.
+          // Gestures.gameController.set('lastPoints', null);
+        }
+      }.observes('matchCount')
+
     }),
 
-    // This view is the target of our gestures (Regular Mode).
+    // The total score.
+    totalScoreLabel: SC.LabelView.design({
+
+      // Give our view a custom class name for styling.
+      classNames: ['score-label'],
+
+      // Place the score in the top-right.
+      layout: { right: 15, top: 5, height: 100, width: 400 },
+
+      // Bind the value of the label to the current score.
+      valueBinding: SC.Binding.oneWay('Gestures.gameController.displayScore')
+
+    }),
+
+    // This is the key view of the demo and the user of SC.Gesturable.
     gestureTarget: SC.View.design(SC.Gesturable, {
 
       layerId: 'gesture-target',
 
       // The view will support the three basic SproutCore built-in gestures: Pinches, Swipes & Taps.
-      gestures: [SC.PinchGesture, SC.SwipeGesture.extend({ direction: [] }), SC.TapGesture], // [0, 180, 90, -90]
+      gestures: [SC.PinchGesture, SC.SwipeGesture.extend({ angles: [] }), SC.TapGesture],
 
+      // Toggle our display via a class, 'is-paused', on isPaused changes.
+      isPaused: false,
       isPausedBinding: SC.Binding.from('Gestures.gameController.isPaused'),
       classNameBindings: ['isPaused'],
 
@@ -244,7 +224,9 @@ Gestures.mainPage = SC.Page.design({
       expectedGesture: null,
       expectedGestureBinding: SC.Binding.oneWay('Gestures.gameController.expectedGesture'),
 
-      // Handle the tap action.
+      /** SC.Gesture Events **/
+
+      // Handle the tap action (once per touch session).
       tap: function (numberOfTouches) {
         // console.warn("Tapped! With numberOfTouches: " + numberOfTouches);
         if (this.get('isRunning') && !this.get('isPaused')) {
@@ -262,14 +244,14 @@ Gestures.mainPage = SC.Page.design({
         }
       },
 
-      // handle the pinch action
+      // Handle the pinch event (may occur multiple times per touch session).
       pinch: function (scale, numberOfTouches) {
         if (this.get('isRunning') && !this.get('isPaused')) {
           // Pinches trigger as fast as possible, but we only accept it as a match when it meets a certain scale.
           var direction = scale < 0.6 ? 'in' : (scale > 1.6 ? 'out' : null);
 
           if (direction !== null) {
-            // console.warn("Pinched! With scale: " + scale);
+            // console.warn("Pinched! With scale: " + scale + ", numberOfTouches: " + numberOfTouches);
             var expectedGesture = this.get('expectedGesture');
 
             // Check if the gesture matches this type of pinch. Ex. 'pinch-in-2', 'pinch-out-2', ...
@@ -281,12 +263,13 @@ Gestures.mainPage = SC.Page.design({
         }
       },
 
+      // Handle the pinch event (may occur multiple times per touch session).
       pinchEnd: function () {
         // Reset the scale of the gesture each time.
         this.gestures[0].scale = 1;
       },
 
-      // handle the swipe action
+      // Handle the swipe action (once per touch session).
       swipe: function (direction, numberOfTouches) {
         // console.warn("Swiped! In direction: %@, number: %@".fmt(direction, numberOfTouches));
         if (this.get('isRunning') && !this.get('isPaused')) {
@@ -294,20 +277,16 @@ Gestures.mainPage = SC.Page.design({
         }
       },
 
+      /** SC.ResponderProtocol **/
+
+      // For users that don't have a touch device, we allow them to use a mouse to make matches.
       mouseDown: function () {
         return true;
       },
 
       mouseUp: function () {
-        if (!this.get('isPaused')) {
-          if (this.get('isRunning')) {
-            Gestures.gameController.matched();
-          } else {
-            // Show the message that this only works with touch events.
-            var mouseMessagePane = Gestures.mainPage.get('mouseMessagePane');
-
-            mouseMessagePane.append();
-          }
+        if (this.get('isRunning') && !this.get('isPaused')) {
+          Gestures.gameController.matched();
         }
 
         return true;
@@ -347,139 +326,7 @@ Gestures.mainPage = SC.Page.design({
 
     }),
 
-    // This is the sound control toggle, which includes the music player within it.
-    musicToggle: SC.View.design({
-
-      childViews: ['audioView'],
-
-      // Two-way binding.
-      isMuted: false,
-      isMutedBinding: SC.Binding.from('Gestures.gameController.isMuted'),
-
-      layerId: 'music-button',
-
-      layout: { top: 34, left: 12, width: 48, height: 48 },
-
-      // Create a poor-man's button. This implementation lacks a lot of nuance that a real button
-      // should support, such as touch down in the button, drag out and then lift (which shouldn't
-      // fire the action).
-      _g_action: function () {
-        this.toggleProperty('isMuted');
-      },
-
-      isMutedDidChange: function () {
-        if (this.get('isMuted')) {
-          this.adjust('opacity', 0.3);
-        } else {
-          this.adjust('opacity', 1);
-        }
-      }.observes('isMuted'),
-
-      mouseDown: function () {
-        return true;
-      },
-
-      mouseUp: function () {
-        this._g_action();
-
-        return true;
-      },
-
-      touchStart: function () {
-        return true;
-      },
-
-      touchEnd: function () {
-        this._g_action();
-      },
-
-      audioView: SC.AudioView.design({
-
-        // Whether the game is running or not.
-        isRunning: false,
-        isRunningBinding: SC.Binding.oneWay('Gestures.gameController.isRunning'),
-
-        isPaused: false,
-        isPausedBinding: SC.Binding.oneWay('Gestures.gameController.isPaused'),
-
-        isMuted: false,
-        isMutedBinding: SC.Binding.from('Gestures.gameController.isMuted'),
-
-        _g_tracks: [
-          sc_static('audio/Life-of-Riley.mp3'), // Waiting room
-          sc_static('audio/Electrodoodle.mp3')  // Playing
-        ],
-
-        // Position the actual audio tag out-of-sight.
-        layout: { width: 1, height: 1, left: -1, top: -1 },
-
-        volume: 0.3,
-
-        init: function () {
-          this.isRunningDidChange();
-
-          sc_super();
-        },
-
-        canPlayDidChange: function () {
-          var canPlay = this.get('canPlay');
-
-          if (canPlay) {
-            this.play();
-          }
-        }.observes('canPlay'),
-
-        // When the game pauses, duck the audio level down (if sound is on).
-        isPausedDidChange: function () {
-          var isRunning = this.get('isRunning'),
-              isMuted = this.get('isMuted');
-
-          if (isRunning && !isMuted) {
-            if (this.get('isPaused')) {
-              // this.stop();
-              // this.set('value', this._g_tracks[0]);
-              this.set('volume', 0.05);
-            } else {
-              // this.play();
-              // this.set('value', this._g_tracks[1]);
-              this.set('volume', 0.3);
-            }
-          }
-        }.observes('isPaused'),
-
-        // When the game starts, switch to our game play music; else switch to the lobby music.
-        isRunningDidChange: function () {
-          var isRunning = this.get('isRunning');
-
-          if (isRunning) {
-            this.set('value', this._g_tracks[1]);
-          } else {
-            this.set('value', this._g_tracks[0]);
-          }
-
-          // Update the volume appropriately.
-          this.isMutedDidChange();
-        }.observes('isRunning'),
-
-        // Whenever muted, set the volume to 0; when unmuted, set the volume according to isPaused.
-        isMutedDidChange: function () {
-          if (this.get('isMuted')) {
-            // this.stop();
-            this.set('volume', 0);
-          } else {
-            if (this.get('isPaused')) {
-              this.set('volume', 0.05);
-            } else {
-              this.set('volume', 0.3);
-            }
-          }
-        }.observes('isMuted')
-
-
-      })
-
-    }),
-
+    // The timer bar.
     timerBar: SC.View.design({
 
       displayLevel: function () {
@@ -520,56 +367,25 @@ Gestures.mainPage = SC.Page.design({
       }
     }),
 
+    // Toggles the isPaused value on each click.
     pauseToggle: SC.ButtonView.design({
+
+      action: 'togglePause',
+
+      classNameBindings: ['isPaused'],
 
       displayProperties: ['isPaused'],
 
       layerId: 'pause-toggle',
 
-      action: 'togglePause',
-
-      // Whether the game is running or not.
-      isVisibleBinding: SC.Binding.oneWay('Gestures.gameController.isRunning'),
       isPausedBinding: SC.Binding.from('Gestures.gameController.isPaused'),
-      classNameBindings: ['isPaused'],
+
+      // Only display when the game is running.
+      isVisibleBinding: SC.Binding.oneWay('Gestures.gameController.isRunning'),
 
       layout: { bottom: 13, left: 12, height: 48, width: 48 },
 
       target: Gestures.gameController
-
-    })
-
-  }),
-
-  mouseMessagePane: SC.PanelPane.design({
-
-    layout: { centerX: 0, centerY: 0, width: 210, height: 205 },
-
-    contentView: SC.View.design({
-      childViews: ['message', 'okButton'],
-
-      // The message.
-      message: SC.LabelView.extend({
-        classNames: ['pane-message'],
-        layout: { height: 140, left: 10, right: 10, top: 10 },
-        localize: true,
-        escapeHTML: false,
-        value: "<span class=\"pane-message-title\">Sorry!</span><br>This game is meant for touch input.<br><br>For the demo, your mouse clicks will trigger the proper gestures, but to try it for real, you will need a touch device."
-      }),
-
-      okButton: SC.ButtonView.design({
-
-        action: 'startWithMouse',
-
-        classNames: ['pane-button'],
-
-        layout: { bottom: 5, height: 40, left: 10, right: 10 },
-
-        title: "OK",
-
-        target: Gestures.gameController
-
-      })
 
     })
 

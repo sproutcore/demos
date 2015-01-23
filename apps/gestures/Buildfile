@@ -11,4 +11,18 @@
 # http://guides.sproutcore.com/build_tools.html.
 
 # It is better to add :required targets here than in the global Buildfile.
-config :gestures, :required => [:"sproutcore/desktop", :"sproutcore/media"]
+config :gestures,
+
+  # Knock out a few files from the built source.
+  :blacklist => 'gestures_blacklist.json',
+
+  # Because we play music, we include the media framework.
+  :required => [:"sproutcore/desktop", :"sproutcore/media"],
+
+  # Don't use the default SproutCore theme, it mostly gets in the way once we have a styled app.
+  :theme => nil,
+
+  # This inserts 'gestures' into the <body> element's class in place of 'sc-theme'.
+  :theme_name => 'gestures',
+
+  :title => 'Gestures'

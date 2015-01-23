@@ -1,0 +1,69 @@
+
+#developer-notes-section {
+  background-color: rgba(237, 231, 231, 0.9);
+  border-top-color: #979797;
+  border-top-style: solid;
+}
+
+#drawer-state-image {
+
+  &.closed {
+    @include slice('images/open-drawer-icon.png');
+  }
+
+  &.open {
+    @include slice('images/close-drawer-icon.png');
+  }
+}
+
+
+// Warning! Use an *un-themed* class for SC.AutoResize to work (the class is copied to the measuring element without the theme name).
+.gesture-label {
+  color: #747474;
+  text-align: center;
+
+  em {
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+
+.developer-notes {
+
+  h2 {
+    text-align: right;
+    margin: 15px 30px 15px 0px;
+  }
+
+  p {
+    margin: 15px 0px;
+    text-align: justify;
+  }
+}
+
+
+.how-to-play-section {
+  h2 {
+    margin: 15px 0px;
+  }
+
+  h3 {
+    margin: 15px 0px;
+  }
+
+  p {
+  }
+}
+
+.title-section {
+
+  h1 {
+    color: #FF5700;
+    margin: 15px 0px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 17px;
+  }
+}

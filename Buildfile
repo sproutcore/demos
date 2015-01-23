@@ -94,3 +94,8 @@ config :family_tree do |c|
   c[:theme] = :family_tree_theme
 end
 
+# It is better to add :required targets here than in the global Buildfile.
+config :gestures,
+
+  # Knock out a few files from the built source.
+  :blacklist => 'gestures_blacklist.json'
