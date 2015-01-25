@@ -34,7 +34,18 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
 
   resizeHandle: SC.View.extend({
     classNames: ['resize-handle'],
-    layout: { bottom: 0, height: 11 },
+
+    parentChildViewLayoutBinding: 'ChildViewLayoutDemo*demoPage.demoContent.containerView.childViews.firstObject.childViewLayout',
+
+    layout: function() {
+      var layout = this.get('parentChildViewLayout');
+
+      if (layout == SC.View.HORIZONTAL_STACK) {
+        return { right: 0, width: 11 };
+      }
+
+      return { bottom: 0, height: 11 };
+    }.property('parentChildViewLayout'),
 
     render: function (context) {
       context.begin().addClass('handle-image').end();
@@ -44,28 +55,47 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
       // Cache the initial vertical offset and parent height.
       var parentView = this.get('parentView'),
         wrapperView = parentView.get('parentView'),
-        frame = parentView.get('borderFrame');
+        frame = parentView.get('borderFrame'),
+        layout = this.get('parentChildViewLayout');
 
       // Indicate that we are resizing.
       wrapperView.beginLiveResize();
 
-      this._initialY = evt.clientY;
-      this._initialHeight = frame.height;
+      if (layout == SC.View.HORIZONTAL_STACK) {
+        this._initialX = evt.clientX;
+        this._initialWidth = frame.width;
+      } else {
+        this._initialY = evt.clientY;
+        this._initialHeight = frame.height;
+      }
 
       return true;
     },
 
     mouseDragged: function (evt) {
       var parentView = this.get('parentView'),
+        layout = this.get('parentChildViewLayout'),
         height,
+        width,
         offset;
+      
+      if (layout == SC.View.HORIZONTAL_STACK) {
+        offset = evt.clientX - this._initialX;
 
-      offset = evt.clientY - this._initialY;
-      // Parent view is centered, so we double the offset to keep the dragger under the mouse (for aesthetic purposes - the view would
-      // continue to get the events even if the mouse is no longer over it, as RootResponder routes subsequent mouse events to the view
-      // which handled mouseDown).
-      height = Math.max(75, this._initialHeight + (offset * 2));
-      parentView.adjust('height', height);
+        // Parent view is centered, so we double the offset to keep the dragger under the mouse (for aesthetic purposes - the view would
+        // continue to get the events even if the mouse is no longer over it, as RootResponder routes subsequent mouse events to the view
+        // which handled mouseDown).
+        width = Math.max(75, this._initialWidth + (offset * 2));
+        parentView.adjust('width', width);
+      } else {
+        offset = evt.clientY - this._initialY;
+
+        // Parent view is centered, so we double the offset to keep the dragger under the mouse (for aesthetic purposes - the view would
+        // continue to get the events even if the mouse is no longer over it, as RootResponder routes subsequent mouse events to the view
+        // which handled mouseDown).
+        height = Math.max(75, this._initialHeight + (offset * 2));
+        parentView.adjust('height', height);
+      }
     },
 
     mouseUp: function (evt) {
@@ -76,7 +106,11 @@ ChildViewLayoutDemo.SampleView = SC.View.extend({
       wrapperView.endLiveResize();
 
       // Clean up.
-      delete this._initialPoint;
+      delete this._initialX;
+      delete this._initialY;
+      delete this._initialWidth;
+      delete this._initialHeight;
+
       parentView.set('transitionAdjust', SC.View.SMOOTH_ADJUST);
 
       return true;
